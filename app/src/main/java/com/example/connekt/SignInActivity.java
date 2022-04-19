@@ -55,8 +55,7 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(SignInActivity.this, "Update the profile " +
-                            "for better expereince", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignInActivity.this, R.string.uploadProfileBetterLabel, Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Connekt</string>
+    <string name="uploadProfileBetterLabel">Upload your profile is better</string>
 </resources>
