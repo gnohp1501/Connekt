@@ -15,8 +15,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUpActivity extends AppCompatActivity {
     private ActivitySignUpBinding binding;
@@ -49,13 +47,13 @@ public class SignUpActivity extends AppCompatActivity {
                 } else if (password.length() < 6) {
                     Toast.makeText(SignUpActivity.this, "Password too short!", Toast.LENGTH_SHORT).show();
                 } else {
-                    registerUser("", "", email, password);
+                    registerUser(email, password);
                 }
             }
         });
     }
 
-    private void registerUser(final String username, final String name, final String email, String password) {
+    private void registerUser(final String email, String password) {
 
         pd.setMessage("Please Wait!");
         pd.show();
