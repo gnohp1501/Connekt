@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateAccountActivity">
+    tools:context=".view.activity.CreateAccountActivity">
 
     <TextView
         android:layout_width="match_parent"
@@ -20,8 +20,9 @@
         app:layout_constraintVertical_bias="0.05"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.13"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -29,58 +30,86 @@
         app:layout_constraintVertical_bias="0.13"
         android:src="@mipmap/ic_launcher"
         />
-    <EditText
-        android:id="@+id/et_full_name"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.08"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.3"
         app:layout_constraintWidth_percent="0.8"
-        android:hint="Full name"
-        android:background="@drawable/bg_edittext"
-        />
-    <EditText
-        android:id="@+id/et_user_name"
+        >
+        <EditText
+            android:id="@+id/et_full_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_edittext"
+            android:hint="Full name"
+            android:paddingLeft="20dp"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.08"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.4"
         app:layout_constraintWidth_percent="0.8"
-        android:hint="User name"
-        android:background="@drawable/bg_edittext"
-        />
-    <EditText
-        android:id="@+id/et_phone"
+        >
+        <EditText
+            android:id="@+id/et_user_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_edittext"
+            android:hint="User name"
+            android:paddingLeft="20dp"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.08"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.5"
         app:layout_constraintWidth_percent="0.8"
-        android:hint="Phone"
-        android:background="@drawable/bg_edittext"
-        />
-    <EditText
-        android:id="@+id/et_bio"
+        >
+        <EditText
+            android:id="@+id/et_phone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_edittext"
+            android:hint="Phone"
+            android:paddingLeft="20dp"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.08"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.6"
         app:layout_constraintWidth_percent="0.8"
-        android:hint="Bio"
-        android:background="@drawable/bg_edittext"
-        />
+        >
+        <EditText
+            android:id="@+id/et_bio"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_edittext"
+            android:hint="Bio"
+            android:paddingLeft="20dp"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
     <Button
         android:id="@+id/but_create"
         android:layout_width="0dp"

@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Connekt</string>
     <string name="uploadProfileBetterLabel">Upload your profile is better</string>
+    <string name="noEmptyLabel">Empty credentials!</string>
+    <string name="passwordTooShortLabel">Password too short!</string>
+    <string name="passwordNotMatchLabel">Two password not match</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
