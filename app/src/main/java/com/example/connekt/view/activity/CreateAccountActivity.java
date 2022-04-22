@@ -2,6 +2,7 @@ package com.example.connekt.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -44,29 +45,30 @@ public class CreateAccountActivity extends AppCompatActivity {
         mRootRef = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
 
+        EMAIL = getIntent().getExtras().getString(Constant.EMAIL);
+        PASSWORD = getIntent().getExtras().getString(Constant.PASSWORD);
+
         binding.butCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mAuth.createUserWithEmailAndPassword(EMAIL, PASSWORD).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        EMAIL = getIntent().getExtras().getString(Constant.EMAIL);
-                        PASSWORD = getIntent().getExtras().getString(Constant.PASSWORD);
                         ID = mAuth.getCurrentUser().getUid();
-                        FULL_NAME = binding.etFullName.getText().toString();
-                        USER_NAME = binding.etUserName.getText().toString();
                         BIO = binding.etBio.getText().toString();
                         //pIMAGE_URL = binding.etFullName.getText().toString();
                         PHONE = binding.etPhone.getText().toString();
+                        FULL_NAME = binding.etFullName.getText().toString();
+                        USER_NAME = binding.etUserName.getText().toString();
                         //DOB = binding.et.getText().toString();
                         HashMap<String, Object> map = new HashMap<>();
                         map.put(Constant.ID, ID);
                         map.put(Constant.FULL_NAME, FULL_NAME);
                         map.put(Constant.EMAIL, EMAIL);
                         map.put(Constant.USER_NAME, USER_NAME);
-                        map.put(Constant.BIO, BIO);
+                        map.put(Constant.BIO, " ");
                         map.put(Constant.IMAGE_URL, "default");
-                        map.put(Constant.PHONE, PHONE);
+                        map.put(Constant.PHONE, " ");
                         map.put(Constant.BOD, "01/01/2000");
                         mRootRef.child(Constant.USERS).child(mAuth.getCurrentUser().getUid()).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override

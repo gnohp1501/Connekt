@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.connekt.constant.Constant;
 import com.example.connekt.databinding.FragmentAddBinding;
 import com.example.connekt.view.activity.MainActivity;
 import com.google.android.gms.tasks.Continuation;
@@ -106,11 +107,11 @@ public class AddFragment extends Fragment {
                     DatabaseReference ref = FirebaseDatabase.getInstance().getReference("posts");
                     String postId = ref.push().getKey();
                     HashMap<String, Object> map = new HashMap<>();
-                    map.put("postid", postId);
-                    map.put("imageurl", imageUrl);
-                    map.put("description", binding.etStatus.getText().toString());
-                    map.put("publisher", FirebaseAuth.getInstance().getCurrentUser().getUid());
-                    map.put("time", System.currentTimeMillis());
+                    map.put(Constant.POST_ID, postId);
+                    map.put(Constant.IMAGE_URL, imageUrl);
+                    map.put(Constant.DESCRIPTION, binding.etStatus.getText().toString());
+                    map.put(Constant.PUBLISHER, FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    map.put(Constant.TIME_CREATED, System.currentTimeMillis()+"");
                     ref.child(postId).setValue(map);
                     pd.dismiss();
                     startActivity(new Intent(getContext(), MainActivity.class));
