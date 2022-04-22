@@ -66,8 +66,9 @@ public class SignUpActivity extends AppCompatActivity {
     private void registerUser() {
         Intent intent = new Intent(SignUpActivity.this, CreateAccountActivity.class);
         Bundle bundle = new Bundle();
-        bundle.getString(Constant.EMAIL, binding.etEmail.getText().toString());
-        bundle.getString(Constant.PASSWORD, binding.etPassword.getText().toString());
+        bundle.putString(Constant.EMAIL, binding.etEmail.getText().toString());
+        bundle.putString(Constant.PASSWORD, binding.etPassword.getText().toString());
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 }

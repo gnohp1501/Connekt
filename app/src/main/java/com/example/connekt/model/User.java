@@ -4,7 +4,7 @@ public class User {
     private String id;
     private String full_name;
     private String email;
-    private String username;
+    private String user_name;
     private String bio;
     private String image_url;
     private String phone_number;
@@ -17,7 +17,7 @@ public class User {
         this.id = id;
         this.full_name = full_name;
         this.email = email;
-        this.username = username;
+        this.user_name = username;
         this.bio = bio;
         this.image_url = image_url;
         this.phone_number = phone_number;
@@ -48,12 +48,12 @@ public class User {
         this.email = email;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUser_name() {
+        return user_name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
     }
 
     public String getBio() {

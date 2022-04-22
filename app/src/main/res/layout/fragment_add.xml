@@ -37,7 +37,7 @@
         app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/tv_ava"
+        android:id="@+id/iv_ava"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:src="@mipmap/ic_launcher_round"
@@ -51,7 +51,7 @@
         android:text="PHONG NGUYEN"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintLeft_toRightOf="@id/tv_ava"
+        app:layout_constraintLeft_toRightOf="@id/iv_ava"
         app:layout_constraintTop_toBottomOf="@id/line1"
         />
 
@@ -60,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Public"
-        app:layout_constraintLeft_toRightOf="@id/tv_ava"
+        app:layout_constraintLeft_toRightOf="@id/iv_ava"
         app:layout_constraintTop_toBottomOf="@id/tv_user_name" />
 
     <EditText
