@@ -40,10 +40,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     private FirebaseUser firebaseUser;
 
 
-    public UserAdapter(Context mContext, List<User> mUsers, boolean isFargment) {
+    public UserAdapter(Context mContext, List<User> mUsers, boolean isFragment) {
         this.mContext = mContext;
         this.mUsers = mUsers;
-        this.isFragment = isFargment;
+        this.isFragment = isFragment;
     }
 
     @NonNull
@@ -60,35 +60,30 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
         final User user = mUsers.get(position);
         holder.btn_Follow.setVisibility(View.VISIBLE);
-
         holder.tv_user_name.setText(user.getUser_name());
         holder.tv_full_name.setText(user.getFull_name());
-
-        Picasso.get().load(user.getImage_url()).placeholder(R.mipmap.ic_launcher).into(holder.iv_ava);
-
+        Picasso.get().load(user.getImage_url()).placeholder(R.color.white).into(holder.iv_ava);
         isFollowed(user.getId(), holder.btn_Follow);
-
         if (user.getId().equals(firebaseUser.getUid())) {
             holder.btn_Follow.setVisibility(View.GONE);
         }
-
         holder.btn_Follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (holder.btn_Follow.getText().toString().equals(("follow"))) {
-                    FirebaseDatabase.getInstance().getReference().child("follow").
-                            child((firebaseUser.getUid())).child("following").child(user.getId()).setValue(true);
+                if (holder.btn_Follow.getText().toString().equals((Constant.FOLLOW))) {
+                    FirebaseDatabase.getInstance().getReference().child(Constant.FOLLOW).
+                            child((firebaseUser.getUid())).child(Constant.FOLLOWING).child(user.getId()).setValue(true);
 
-                    FirebaseDatabase.getInstance().getReference().child("follow").
-                            child(user.getId()).child("followers").child(firebaseUser.getUid()).setValue(true);
+                    FirebaseDatabase.getInstance().getReference().child(Constant.FOLLOW).
+                            child(user.getId()).child(Constant.FOLLOWERS).child(firebaseUser.getUid()).setValue(true);
 
                     addNotification(user.getId());
                 } else {
-                    FirebaseDatabase.getInstance().getReference().child("follow").
-                            child((firebaseUser.getUid())).child("following").child(user.getId()).removeValue();
+                    FirebaseDatabase.getInstance().getReference().child(Constant.FOLLOW).
+                            child((firebaseUser.getUid())).child(Constant.FOLLOWING).child(user.getId()).removeValue();
 
-                    FirebaseDatabase.getInstance().getReference().child("follow").
-                            child(user.getId()).child("followers").child(firebaseUser.getUid()).removeValue();
+                    FirebaseDatabase.getInstance().getReference().child(Constant.FOLLOW).
+                            child(user.getId()).child(Constant.FOLLOWERS).child(firebaseUser.getUid()).removeValue();
                 }
             }
         });
@@ -97,11 +92,11 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
                 if (isFragment) {
-                    mContext.getSharedPreferences("PROFILE", Context.MODE_PRIVATE).edit().putString("profileId", user.getId()).apply();
+                    mContext.getSharedPreferences(Constant.PROFILE, Context.MODE_PRIVATE).edit().putString(Constant.PROFILE_ID, user.getId()).apply();
                     ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PersonFragment()).commit();
                 } else {
                     Intent intent = new Intent(mContext, MainActivity.class);
-                    intent.putExtra("publisherId", user.getId());
+                    intent.putExtra(Constant.PUBLISHER_ID, user.getId());
                     mContext.startActivity(intent);
                 }
             }
@@ -111,15 +106,17 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     private void isFollowed(final String id, final Button btnFollow) {
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("follow").child(firebaseUser.getUid())
-                .child("following");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child(Constant.FOLLOW).child(firebaseUser.getUid())
+                .child(Constant.FOLLOWING);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child(id).exists())
-                    btnFollow.setText("following");
-                else
-                    btnFollow.setText("follow");
+                if (dataSnapshot.child(id).exists()) {
+                    btnFollow.setText(Constant.FOLLOWING);
+                } else {
+                    btnFollow.setText(Constant.FOLLOW);
+                }
+
             }
 
             @Override
@@ -153,13 +150,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     private void addNotification(String userId) {
         HashMap<String, Object> map = new HashMap<>();
-
         map.put(Constant.USER_ID, firebaseUser.getUid());
-        map.put(Constant.TITLE,Constant.FOLLOW_YOU);
+        map.put(Constant.TITLE, mContext.getString(R.string.followyouLabel));
         map.put(Constant.POST_ID, "");
         map.put(Constant.IS_POST, false);
-
-        FirebaseDatabase.getInstance().getReference().child("notifications").child(userId).push().setValue(map);
+        map.put(Constant.TIME_CREATED,System.currentTimeMillis()+"");
+        FirebaseDatabase.getInstance().getReference().child(Constant.NOTIFICATIONS).child(userId).push().setValue(map);
     }
 
 }

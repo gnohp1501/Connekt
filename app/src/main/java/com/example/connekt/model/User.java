@@ -9,8 +9,29 @@ public class User {
     private String image_url;
     private String phone_number;
     private String dob;
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public User() {
+    }
+
+    public User(String id, String full_name, String email, String user_name, String bio, String image_url, String phone_number, String dob, String status) {
+        this.id = id;
+        this.full_name = full_name;
+        this.email = email;
+        this.user_name = user_name;
+        this.bio = bio;
+        this.image_url = image_url;
+        this.phone_number = phone_number;
+        this.dob = dob;
+        this.status = status;
     }
 
     public User(String id, String full_name, String email, String username, String bio, String image_url, String phone_number, String dob) {

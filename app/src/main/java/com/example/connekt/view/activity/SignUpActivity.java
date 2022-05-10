@@ -7,20 +7,31 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.connekt.R;
 import com.example.connekt.constant.Constant;
 import com.example.connekt.databinding.ActivitySignUpBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
 
 public class SignUpActivity extends AppCompatActivity {
     private ActivitySignUpBinding binding;
     private FirebaseAuth mAuth;
+    private DatabaseReference mRootRef;
     ProgressDialog pd;
     public String EMAIL;
     public String PASSWORD;
     public String RE_PASSWORD;
+    public String ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +40,7 @@ public class SignUpActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
         mAuth = FirebaseAuth.getInstance();
+        mRootRef = FirebaseDatabase.getInstance().getReference();
         pd = new ProgressDialog(this);
         goSignIn();
         createAccount();
@@ -64,11 +76,43 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void registerUser() {
-        Intent intent = new Intent(SignUpActivity.this, CreateAccountActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString(Constant.EMAIL, binding.etEmail.getText().toString());
-        bundle.putString(Constant.PASSWORD, binding.etPassword.getText().toString());
-        intent.putExtras(bundle);
-        startActivity(intent);
+        mAuth.createUserWithEmailAndPassword(EMAIL, PASSWORD).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                ID = mAuth.getCurrentUser().getUid();
+                HashMap<String, Object> map = new HashMap<>();
+                map.put(Constant.ID, ID);
+                map.put(Constant.FULL_NAME,EMAIL);
+                map.put(Constant.EMAIL, EMAIL);
+                map.put(Constant.USER_NAME,EMAIL);
+                map.put(Constant.BIO,"");
+                map.put(Constant.IMAGE_URL, Constant.DEFAULT);
+                map.put(Constant.PHONE, " ");
+                map.put(Constant.BOD, " ");
+                map.put("status","online");
+                mRootRef.child(Constant.USERS).child(mAuth.getCurrentUser().getUid()).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(SignUpActivity.this, R.string.uploadProfileBetterLabel, Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(SignUpActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
     }
 }

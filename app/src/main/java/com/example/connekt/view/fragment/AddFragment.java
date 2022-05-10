@@ -16,17 +16,22 @@ import androidx.fragment.app.Fragment;
 
 import com.example.connekt.constant.Constant;
 import com.example.connekt.databinding.FragmentAddBinding;
+import com.example.connekt.model.User;
 import com.example.connekt.view.activity.MainActivity;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
@@ -61,6 +66,7 @@ public class AddFragment extends Fragment {
                 uploadImage();
             }
         });
+        userInfo();
         return view;
     }
 
@@ -70,7 +76,22 @@ public class AddFragment extends Fragment {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, REQUEST_CODE);
     }
+    private void userInfo() {
+        FirebaseDatabase.getInstance().getReference().child(Constant.USERS)
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                binding.tvUserName.setText(user.getUser_name());
+                Picasso.get().load(user.getImage_url()).into(binding.ivAva);
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -87,8 +108,7 @@ public class AddFragment extends Fragment {
         pd.show();
 
         if (filePathUri != null) {
-            final StorageReference filePath = FirebaseStorage.getInstance().getReference("posts").child(System.currentTimeMillis() + "." + getFileExtension(filePathUri));
-
+            final StorageReference filePath = FirebaseStorage.getInstance().getReference(Constant.POSTS).child(System.currentTimeMillis() + "." + getFileExtension(filePathUri));
             StorageTask uploadTask = filePath.putFile(filePathUri);
             uploadTask.continueWithTask(new Continuation() {
                 @Override
@@ -104,14 +124,14 @@ public class AddFragment extends Fragment {
                 public void onComplete(@NonNull Task<Uri> task) {
                     Uri downloadUri = task.getResult();
                     imageUrl = downloadUri.toString();
-                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("posts");
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference(Constant.POSTS);
                     String postId = ref.push().getKey();
                     HashMap<String, Object> map = new HashMap<>();
                     map.put(Constant.POST_ID, postId);
                     map.put(Constant.IMAGE_URL, imageUrl);
                     map.put(Constant.DESCRIPTION, binding.etStatus.getText().toString());
                     map.put(Constant.PUBLISHER, FirebaseAuth.getInstance().getCurrentUser().getUid());
-                    map.put(Constant.TIME_CREATED, System.currentTimeMillis()+"");
+                    map.put(Constant.TIME_CREATED, System.currentTimeMillis() + "");
                     ref.child(postId).setValue(map);
                     pd.dismiss();
                     startActivity(new Intent(getContext(), MainActivity.class));
@@ -128,8 +148,6 @@ public class AddFragment extends Fragment {
     }
 
     private String getFileExtension(Uri uri) {
-
         return MimeTypeMap.getSingleton().getExtensionFromMimeType(getContext().getContentResolver().getType(uri));
-
     }
 }

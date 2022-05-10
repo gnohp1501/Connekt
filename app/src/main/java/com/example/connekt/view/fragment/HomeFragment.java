@@ -1,5 +1,6 @@
 package com.example.connekt.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,13 +11,18 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.connekt.adapter.PostAdapter;
+import com.example.connekt.constant.Constant;
 import com.example.connekt.databinding.FragmentHomeBinding;
 import com.example.connekt.model.Post;
+import com.example.connekt.model.User;
+import com.example.connekt.view.activity.ChatMainActivity;
+import com.example.connekt.view.activity.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,12 +51,34 @@ public class HomeFragment extends Fragment {
         postAdapter = new PostAdapter(getContext(), postList);
         binding.rvPost.setAdapter(postAdapter);
         followingList = new ArrayList<>();
+        binding.message.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),ChatMainActivity.class);
+                ((MainActivity) getActivity()).startActivity(intent);
+            }
+        });
         checkFollowingUsers();
+        userInfo();
         return view;
     }
+    private void userInfo() {
+        FirebaseDatabase.getInstance().getReference().child(Constant.USERS)
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                binding.tvUserName.setText(user.getUser_name());
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
     private void checkFollowingUsers() {
-        FirebaseDatabase.getInstance().getReference().child("follow").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("following").addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child(Constant.FOLLOW).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(Constant.FOLLOWING).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 followingList.clear();
@@ -60,7 +88,6 @@ public class HomeFragment extends Fragment {
                 followingList.add(FirebaseAuth.getInstance().getCurrentUser().getUid());
                 readPosts();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -69,7 +96,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void readPosts() {
-        FirebaseDatabase.getInstance().getReference().child("posts").addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child(Constant.POSTS).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 postList.clear();
