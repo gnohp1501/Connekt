@@ -10,6 +10,15 @@ public class User {
     private String phone_number;
     private String dob;
     private String status;
+    private String last_seen;
+
+    public String getLast_seen() {
+        return last_seen;
+    }
+
+    public void setLast_seen(String last_seen) {
+        this.last_seen = last_seen;
+    }
 
     public String getStatus() {
         return status;
@@ -22,7 +31,7 @@ public class User {
     public User() {
     }
 
-    public User(String id, String full_name, String email, String user_name, String bio, String image_url, String phone_number, String dob, String status) {
+    public User(String id, String full_name, String email, String user_name, String bio, String image_url, String phone_number, String dob, String status, String last_seen) {
         this.id = id;
         this.full_name = full_name;
         this.email = email;
@@ -32,6 +41,7 @@ public class User {
         this.phone_number = phone_number;
         this.dob = dob;
         this.status = status;
+        this.last_seen = last_seen;
     }
 
     public User(String id, String full_name, String email, String username, String bio, String image_url, String phone_number, String dob) {

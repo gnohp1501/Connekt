@@ -1,5 +1,8 @@
 package com.example.connekt.view.activity;
 
+import android.os.Bundle;
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,9 +10,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-
-import android.os.Bundle;
-import android.view.View;
 
 import com.example.connekt.R;
 import com.example.connekt.databinding.ActivityChatMainBinding;
@@ -33,6 +33,7 @@ public class ChatMainActivity extends AppCompatActivity {
     private ActivityChatMainBinding binding;
     DatabaseReference databaseReference;
     FirebaseUser firebaseUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,22 +43,22 @@ public class ChatMainActivity extends AppCompatActivity {
         init();
         setFirebaseUser();
     }
-    public void init()
-    {
+
+    public void init() {
         TabLayout tabLayout = findViewById(R.id.tab_layout);
         ViewPager viewPager = findViewById(R.id.view_pager);
 
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPagerAdapter.addFragments(new ChatFragment(),"CHAT");
-        viewPagerAdapter.addFragments(new UserChatFragment(),"USER");
+        viewPagerAdapter.addFragments(new ChatFragment(), "CHAT");
+        viewPagerAdapter.addFragments(new UserChatFragment(), "USER");
 
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }
-    class ViewPagerAdapter extends FragmentPagerAdapter
-    {
-        private ArrayList<Fragment> fragments;
-        private ArrayList<String > titles;
+
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final ArrayList<Fragment> fragments;
+        private final ArrayList<String> titles;
 
 
         public ViewPagerAdapter(@NonNull FragmentManager fm) {
@@ -76,8 +77,8 @@ public class ChatMainActivity extends AppCompatActivity {
         public int getCount() {
             return fragments.size();
         }
-        public void addFragments(Fragment fragment,String title)
-        {
+
+        public void addFragments(Fragment fragment, String title) {
             fragments.add(fragment);
             titles.add(title);
         }
@@ -88,20 +89,18 @@ public class ChatMainActivity extends AppCompatActivity {
             return titles.get(position);
         }
     }
-    public void setFirebaseUser()
-    {
+
+    public void setFirebaseUser() {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        databaseReference= FirebaseDatabase.getInstance().getReference("users").child(firebaseUser.getUid());
+        databaseReference = FirebaseDatabase.getInstance().getReference("users").child(firebaseUser.getUid());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
                 binding.tvUserName.setText(user.getUser_name());
-                if(user.getImage_url().equals("default"))
-                {
+                if (user.getImage_url().equals("default")) {
                     binding.ivAva.setImageResource(R.mipmap.ic_launcher);
-                }else
-                {
+                } else {
                     Picasso.get().load(user.getImage_url()).into(binding.ivAva);
                 }
             }
@@ -112,24 +111,24 @@ public class ChatMainActivity extends AppCompatActivity {
             }
         });
     }
-    private void status(String status)
-    {
-        databaseReference =FirebaseDatabase.getInstance().getReference("users").child(firebaseUser.getUid());
 
-        HashMap<String,Object> hashMap = new HashMap<>();
-        hashMap.put("status",status);
+    private void status(String status, String last_seen) {
+        databaseReference = FirebaseDatabase.getInstance().getReference("users").child(firebaseUser.getUid());
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("status", status);
+        hashMap.put("last_seen",last_seen);
         databaseReference.updateChildren(hashMap);
     }
 
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        status("online");
+        status("online", "0");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        status("offline");
+        status("offline", System.currentTimeMillis() + "");
     }
 }

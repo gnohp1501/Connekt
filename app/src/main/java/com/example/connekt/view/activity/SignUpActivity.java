@@ -46,7 +46,7 @@ public class SignUpActivity extends AppCompatActivity {
         createAccount();
     }
 
-         private void createAccount() {
+    private void createAccount() {
         binding.butSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,14 +82,15 @@ public class SignUpActivity extends AppCompatActivity {
                 ID = mAuth.getCurrentUser().getUid();
                 HashMap<String, Object> map = new HashMap<>();
                 map.put(Constant.ID, ID);
-                map.put(Constant.FULL_NAME,EMAIL);
+                map.put(Constant.FULL_NAME, EMAIL);
                 map.put(Constant.EMAIL, EMAIL);
-                map.put(Constant.USER_NAME,EMAIL);
-                map.put(Constant.BIO,"");
+                map.put(Constant.USER_NAME, EMAIL);
+                map.put(Constant.BIO, "");
                 map.put(Constant.IMAGE_URL, Constant.DEFAULT);
                 map.put(Constant.PHONE, " ");
                 map.put(Constant.BOD, " ");
-                map.put("status","online");
+                map.put("status", "online");
+                map.put("last_seen", System.currentTimeMillis() + "");
                 mRootRef.child(Constant.USERS).child(mAuth.getCurrentUser().getUid()).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

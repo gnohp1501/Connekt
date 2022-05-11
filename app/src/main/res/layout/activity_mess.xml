@@ -1,29 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
+
     <LinearLayout
+        android:id="@+id/linearlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/linearlayout"
         android:layout_marginTop="10dp"
-        >
+        android:orientation="horizontal">
+
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/image_user"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@mipmap/ic_launcher_round"
-            android:id="@+id/image_user"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="USER NAME"
-            android:id="@+id/username_user"
-            android:gravity="center"
+            android:src="@mipmap/ic_launcher_round" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/username_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="USER NAME"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_last_seen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="last seen in have" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -32,6 +45,7 @@
         android:layout_height="550dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="48dp" />
+
     <EditText
         android:id="@+id/text_send"
         android:layout_width="362dp"
@@ -42,9 +56,9 @@
         android:layout_marginStart="0dp"
         android:layout_marginEnd="49dp"
         android:layout_marginBottom="0dp"
-        android:hint="Type message here ...." />
+        />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/button_send"
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -53,7 +67,8 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/ic_sent" />
 
 
 </RelativeLayout>

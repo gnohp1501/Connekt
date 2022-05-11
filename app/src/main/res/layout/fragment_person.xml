@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -45,44 +46,97 @@
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@id/iv_ava"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:src="@color/black" />
-
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:src="@drawable/cover" />
     <RelativeLayout
         android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/iv_ava"
-        android:layout_marginTop="-40dp"
+        android:layout_marginTop="150dp"
         android:background="@drawable/background_post"
         android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_follow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/tv_followers"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="1k"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.4" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Followers"
+                android:textAlignment="center"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_followers"
+                app:layout_constraintWidth_percent="0.4" />
+
+            <TextView
+                android:id="@+id/tv_following"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="1K"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.4" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Following"
+                android:textAlignment="center"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_following"
+                app:layout_constraintWidth_percent="0.4" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:id="@+id/mid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/layout_follow"
             android:orientation="vertical"
             android:padding="12dp">
 
             <TextView
                 android:id="@+id/tv_full_name"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:maxLines="1"
+                android:text="Jacob"
                 android:textSize="18sp"
+                android:textColor="@color/black"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_bio"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="60dp"
                 android:layout_marginTop="5dp"
+                android:gravity="center_horizontal"
                 android:maxLines="5"
+                android:text="123123123123123123123123123123123123123123123123123123123"
                 android:textColor="@color/colorAccent" />
 
             <Button
@@ -138,5 +192,31 @@
             android:layout_height="wrap_content"
             android:visibility="gone" />
     </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        >
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@id/iv_ava"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="100dp"
+            android:src="@color/black" />
+
+        <ImageView
+            android:id="@+id/iv_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_ava"
+            android:layout_marginStart="-50dp"
+            android:layout_marginLeft="-50dp"
+            android:layout_marginTop="-50dp"
+            android:layout_marginEnd="-50dp"
+            android:layout_marginBottom="-50dp"
+            android:layout_toRightOf="@id/iv_ava"
+            android:src="@drawable/ic_camera_button" />
+    </RelativeLayout>
+
 
 </RelativeLayout>

@@ -8,18 +8,21 @@
     tools:context=".view.fragment.AddFragment">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/bar"
+        android:background="?android:attr/windowBackground"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:background="?android:attr/windowBackground">
+        app:layout_constraintTop_toTopOf="parent">
+
         <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/toolbar"
+            android:layout_marginHorizontal="10dp"
             android:background="?android:attr/windowBackground">
+
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
@@ -27,22 +30,21 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="10dp"
+                    android:layout_centerInParent="true"
                     android:text="CREATE POST"
-                    android:textSize="16dp"
-                    android:textStyle="bold" />
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
 
-                <TextView
+                <ImageView
                     android:id="@+id/but_publish"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:text="PUBLISH"
-                    android:textSize="14sp" />
-
+                    android:layout_marginRight="30dp"
+                    android:src="@drawable/ic_push_button"
+                    android:textSize="18sp" />
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
@@ -72,12 +74,12 @@
         android:id="@+id/et_status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:backgroundTint="@color/white"
         android:hint="What do you think ?"
         android:textColor="@color/black"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
         android:textColorHint="@color/black_50"
-        android:backgroundTint="@color/white"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_ava" />
@@ -91,15 +93,15 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/et_status" />
 
-    <Button
+    <ImageView
         android:id="@+id/but_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text=" choose picture "
-        android:textColor="@color/black"
+        android:layout_margin="30dp"
+        android:background="@drawable/ic_camera_button2"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

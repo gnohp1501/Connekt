@@ -31,7 +31,6 @@ import java.util.List;
 public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
 
-
     private PostAdapter postAdapter;
     private List<Post> postList;
 
