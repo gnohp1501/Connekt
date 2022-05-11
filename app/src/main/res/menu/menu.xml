@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/nav_home"
-        android:icon="@drawable/ic_icons8_home_48"
+        android:icon="@drawable/ic_icon_ins_home_outlined"
         android:title="Home"/>
 
     <item android:id="@+id/nav_search"
@@ -10,7 +10,7 @@
         android:title="Search"/>
 
     <item android:id="@+id/nav_add"
-        android:icon="@drawable/icon_add"
+        android:icon="@drawable/ic_baseline_add_box_24"
         android:title="Add"/>
 
     <item android:id="@+id/nav_heart"

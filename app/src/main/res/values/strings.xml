@@ -7,4 +7,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="followyouLabel">followed you .</string>
+    <string name="deleteLabel">Do you want to delete ?</string>
+    <string name="noLabel">NO</string>
+    <string name="yesLabel">YES</string>
+    <string name="deleteCommentSuccessLabel">comment deleted</string>
+    <string name="likedYourPostLabel">Liked your post</string>
 </resources>

@@ -10,10 +10,25 @@ public class Notification {
     private String title;
     @SerializedName(Constant.POST_ID)
     private String post_id;
+    @SerializedName(Constant.TIME_CREATED)
+    private String time_created;
     @SerializedName(Constant.IS_POST)
     private boolean isPost;
 
-    public Notification() {
+    public String getTime_created() {
+        return time_created;
+    }
+
+    public void setTime_created(String time_created) {
+        this.time_created = time_created;
+    }
+
+    public Notification(String user_id, String title, String post_id, String time_created, boolean isPost) {
+        this.user_id = user_id;
+        this.title = title;
+        this.post_id = post_id;
+        this.time_created = time_created;
+        this.isPost = isPost;
     }
 
     public Notification(String user_id, String title, String post_id, boolean isPost) {
@@ -21,6 +36,9 @@ public class Notification {
         this.title = title;
         this.post_id = post_id;
         this.isPost = isPost;
+    }
+
+    public Notification() {
     }
 
     public String getUser_id() {

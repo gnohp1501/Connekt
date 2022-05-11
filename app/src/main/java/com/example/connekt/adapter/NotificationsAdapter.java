@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.connekt.R;
+import com.example.connekt.constant.Constant;
 import com.example.connekt.model.Notification;
 import com.example.connekt.model.Post;
 import com.example.connekt.model.User;
@@ -61,8 +62,8 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
 //                    ((FragmentActivity)mContext).getSupportFragmentManager()
 //                            .beginTransaction().replace(R.id.fragment_container, new PostDetailFragment()).commit();
 //                } else {
-//                    mContext.getSharedPreferences("PROFILE", Context.MODE_PRIVATE)
-//                            .edit().putString("profileId", notification.getUserid()).apply();
+//                    mContext.getSharedPreferences(Constant.PROFILE, Context.MODE_PRIVATE)
+//                            .edit().putString(Constant.PROFILE_ID, notification.getUserid()).apply();
 //                    ((FragmentActivity)mContext).getSupportFragmentManager()
 //                            .beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
 //                }
@@ -91,7 +92,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
     }
 
     private void getPostImage(final ImageView imageView, String postId) {
-        FirebaseDatabase.getInstance().getReference().child("posts").child(postId).addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child(Constant.POSTS).child(postId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Post post = dataSnapshot.getValue(Post.class);
@@ -106,11 +107,11 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
     }
 
     private void getUser(final ImageView imageView, final TextView textView, String userId) {
-        FirebaseDatabase.getInstance().getReference().child("users").child(userId).addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child(Constant.USERS).child(userId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                if (user.getImage_url().equals("default")) {
+                if (user.getImage_url().equals(Constant.DEFAULT)) {
                     imageView.setImageResource(R.mipmap.ic_launcher);
                 } else {
                     Picasso.get().load(user.getImage_url()).into(imageView);

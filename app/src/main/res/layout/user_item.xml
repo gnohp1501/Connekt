@@ -2,48 +2,57 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp">
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginBottom="20dp"
+    android:background="@drawable/background_post">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_ava"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="14dp"
         android:src="@mipmap/ic_launcher" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/iv_ava"
+        android:layout_centerVertical="true"
         android:layout_marginStart="5dp"
-        android:orientation="vertical"
-        android:layout_centerVertical="true">
+        android:layout_toEndOf="@id/iv_ava"
+        android:orientation="vertical">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/tv_user_name"
-            android:text="username"
-            android:maxLines="1"
-            android:textStyle="bold"
-            android:textColor="@color/black"/>
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_full_name"
-            android:text="Full name"
-            android:maxLines="1"/>
+            android:maxLines="1"
+            android:text="username"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/tv_full_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text="Full name"
+            />
     </LinearLayout>
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:background="@color/black"
         android:id="@+id/but_follow"
-        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:visibility="gone"/>
-
+        android:layout_marginRight="20dp"
+        android:background="@drawable/background_button"
+        android:padding="5dp"
+        android:textColor="@color/blue_1"
+        android:visibility="gone" />
 </RelativeLayout>

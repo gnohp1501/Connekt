@@ -8,13 +8,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.connekt.R;
+import com.example.connekt.constant.Constant;
 import com.example.connekt.view.fragment.AddFragment;
 import com.example.connekt.view.fragment.FavoriteFragment;
 import com.example.connekt.view.fragment.HomeFragment;
 import com.example.connekt.view.fragment.PersonFragment;
 import com.example.connekt.view.fragment.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private Fragment selectorFragment;
@@ -60,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
         });
         Bundle intent = getIntent().getExtras();
         if (intent != null) {
-            String profileId = intent.getString("publisherId");
-            getSharedPreferences("PROFILE", MODE_PRIVATE).edit().putString("profileId", profileId).apply();
+            String profileId = intent.getString(Constant.PUBLISHER_ID);
+            getSharedPreferences(Constant.PROFILE, MODE_PRIVATE).edit().putString(Constant.PROFILE_ID, profileId).apply();
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PersonFragment()).commit();
             bottomNavigationView.setSelectedItemId(R.id.nav_profile);
         } else {

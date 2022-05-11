@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/ic_launcher_round"
+        android:id="@+id/listimage_user"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"/>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:id="@+id/status_on"
+        android:src="#00ff00"
+        android:layout_toRightOf="@id/listimage_user"
+        android:visibility="gone"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="-25dp"/>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:id="@+id/status_off"
+        android:src=" #c0c0c0"
+        android:layout_toRightOf="@id/listimage_user"
+        android:visibility="gone"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="-25dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="USER NAME"
+        android:id="@+id/listusername_user"
+        android:layout_toRightOf="@id/listimage_user"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:textSize="20dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/listimage_user"
+        android:id="@+id/last_mess"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="30dp"
+        android:maxLines="1"
+        android:maxLength="20"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/time"
+        android:text="19:00"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="330dp"
+        />
+
+</RelativeLayout>

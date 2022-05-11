@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.connekt.R;
 import com.example.connekt.adapter.NotificationsAdapter;
 import com.example.connekt.adapter.UserAdapter;
+import com.example.connekt.constant.Constant;
 import com.example.connekt.databinding.FragmentFavoriteBinding;
 import com.example.connekt.databinding.FragmentSearchBinding;
 import com.example.connekt.model.Notification;
@@ -51,18 +52,16 @@ public class FavoriteFragment extends Fragment {
     }
     private void readNotifications() {
 
-        FirebaseDatabase.getInstance().getReference().child("notifications").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child(Constant.NOTIFICATIONS).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 notificationList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-
                     notificationList.add(snapshot.getValue(Notification.class));
                 }
                 Collections.reverse(notificationList);
                 notificationAdapter.notifyDataSetChanged();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 

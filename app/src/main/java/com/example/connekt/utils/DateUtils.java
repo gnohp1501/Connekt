@@ -1,5 +1,6 @@
 package com.example.connekt.utils;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -16,15 +17,12 @@ public class DateUtils {
 
     public static String getTimeAgo(long time) {
         if (time < 1000000000000L) {
-            // if timestamp given in seconds, convert to millis
             time *= 1000;
         }
-
         long now = currentDate().getTime();
         if (time > now || time <= 0) {
             return "in the future";
         }
-
         final long diff = now - time;
         if (diff < MINUTE_MILLIS) {
             return "Moments ago";
@@ -38,8 +36,13 @@ public class DateUtils {
             return diff / HOUR_MILLIS + " hours ago";
         } else if (diff < 48 * HOUR_MILLIS) {
             return "Yesterday";
-        } else {
+        } else if (diff < 3 * DAY_MILLIS){
             return diff / DAY_MILLIS + " days ago";
+        } else {
+            Date date = new Date(time);
+            SimpleDateFormat formatter = new SimpleDateFormat("EEE, d MMM yyyy");
+            String format = formatter.format(date);
+            return format;
         }
     }
 }
