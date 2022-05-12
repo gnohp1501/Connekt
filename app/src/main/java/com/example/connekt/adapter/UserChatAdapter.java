@@ -94,27 +94,6 @@ public class UserChatAdapter extends RecyclerView.Adapter<UserChatAdapter.ViewHo
         return mUsers.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-
-        public TextView username;
-        public ImageView imageView;
-        public CircleImageView status_on;
-        public CircleImageView status_off;
-        public TextView last_mess;
-        public TextView time;
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            username = itemView.findViewById(R.id.tv_user_name);
-            imageView = itemView.findViewById(R.id.iv_ava);
-            status_on = itemView.findViewById(R.id.status_on);
-            status_off = itemView.findViewById(R.id.status_off);
-            last_mess = itemView.findViewById(R.id.tv_last_mess);
-            time = itemView.findViewById(R.id.tv_time_last);
-        }
-    }
-
     public void lastMess(String userid, TextView last_mess, TextView time) {
         theLastMess = "default";
         timeTheLastMess = "0";
@@ -151,6 +130,27 @@ public class UserChatAdapter extends RecyclerView.Adapter<UserChatAdapter.ViewHo
 
             }
         });
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        public TextView username;
+        public ImageView imageView;
+        public CircleImageView status_on;
+        public CircleImageView status_off;
+        public TextView last_mess;
+        public TextView time;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            username = itemView.findViewById(R.id.tv_user_name);
+            imageView = itemView.findViewById(R.id.iv_ava);
+            status_on = itemView.findViewById(R.id.status_on);
+            status_off = itemView.findViewById(R.id.status_off);
+            last_mess = itemView.findViewById(R.id.tv_last_mess);
+            time = itemView.findViewById(R.id.tv_time_last);
+        }
     }
 }
 

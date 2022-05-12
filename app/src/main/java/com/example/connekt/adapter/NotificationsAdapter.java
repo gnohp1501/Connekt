@@ -76,21 +76,6 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         return mNotifications.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public ImageView iv_ava;
-        public ImageView iv_image;
-        public TextView tv_user_name;
-        public TextView tv_title;
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            iv_ava = itemView.findViewById(R.id.iv_ava);
-            iv_image = itemView.findViewById(R.id.iv_image);
-            tv_user_name = itemView.findViewById(R.id.tv_user_name);
-            tv_title = itemView.findViewById(R.id.tv_title);
-        }
-    }
-
     private void getPostImage(final ImageView imageView, String postId) {
         FirebaseDatabase.getInstance().getReference().child(Constant.POSTS).child(postId).addValueEventListener(new ValueEventListener() {
             @Override
@@ -124,5 +109,20 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
 
             }
         });
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        public ImageView iv_ava;
+        public ImageView iv_image;
+        public TextView tv_user_name;
+        public TextView tv_title;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            iv_ava = itemView.findViewById(R.id.iv_ava);
+            iv_image = itemView.findViewById(R.id.iv_image);
+            tv_user_name = itemView.findViewById(R.id.tv_user_name);
+            tv_title = itemView.findViewById(R.id.tv_title);
+        }
     }
 }

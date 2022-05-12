@@ -34,10 +34,10 @@ import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
-    private Context mContext;
-    private List<Post> mPosts;
+    private final Context mContext;
+    private final List<Post> mPosts;
 
-    private FirebaseUser firebaseUser;
+    private final FirebaseUser firebaseUser;
 
     public PostAdapter(Context mContext, List<Post> mPosts) {
         this.mContext = mContext;
@@ -74,6 +74,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 holder.tv_user_name.setText(user.getUser_name());
                 holder.tv_user_name2.setText(user.getUser_name());
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -179,43 +180,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         return mPosts.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public final ImageView iv_ava;
-        public final ImageView iv_image;
-        public final ImageView iv_heart;
-        public final ImageView iv_comment;
-        public final ImageView iv_save;
-        public final ImageView iv_more;
-
-        public final TextView tv_user_name;
-        public final TextView tv_user_name2;
-        public final TextView tv_time_created;
-        //public final TextView tv_privacy;
-        public final TextView tv_description;
-        public final TextView tv_heart;
-        public final TextView tv_comment;
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            iv_ava = itemView.findViewById(R.id.iv_ava);
-            iv_image = itemView.findViewById(R.id.iv_image);
-            iv_heart = itemView.findViewById(R.id.iv_heart);
-            iv_comment = itemView.findViewById(R.id.iv_comment);
-            iv_save = itemView.findViewById(R.id.iv_save);
-            iv_more = itemView.findViewById(R.id.iv_more);
-
-            tv_user_name = itemView.findViewById(R.id.tv_user_name);
-            tv_user_name2 = itemView.findViewById(R.id.tv_user_name2);
-            tv_time_created = itemView.findViewById(R.id.tv_time_created);
-            //tv_privacy = itemView.findViewById(R.id.tv_privacy);
-            tv_description = itemView.findViewById(R.id.tv_description);
-            tv_heart = itemView.findViewById(R.id.tv_heart);
-            tv_comment = itemView.findViewById(R.id.tv_comment);
-        }
-    }
-
-    private void isSaved (final String postId, final ImageView image) {
+    private void isSaved(final String postId, final ImageView image) {
         FirebaseDatabase.getInstance().getReference().child(Constant.SAVES).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -255,11 +220,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         });
     }
 
-    private void noOfLikes (String postId, final TextView text) {
+    private void noOfLikes(String postId, final TextView text) {
         FirebaseDatabase.getInstance().getReference().child(Constant.LIKES).child(postId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                text.setText(dataSnapshot.getChildrenCount()+"");
+                text.setText(dataSnapshot.getChildrenCount() + "");
             }
 
             @Override
@@ -269,11 +234,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         });
     }
 
-    private void getComments (String postId, final TextView text) {
+    private void getComments(String postId, final TextView text) {
         FirebaseDatabase.getInstance().getReference().child(Constant.COMMENTS).child(postId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                text.setText(dataSnapshot.getChildrenCount()+"");
+                text.setText(dataSnapshot.getChildrenCount() + "");
             }
 
             @Override
@@ -283,14 +248,50 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         });
     }
 
-    private void addNotification(String postId,String publisherId) {
+    private void addNotification(String postId, String publisherId) {
         HashMap<String, Object> map = new HashMap<>();
 
         map.put(Constant.USER_ID, firebaseUser.getUid());
         map.put(Constant.TITLE, mContext.getString(R.string.likedYourPostLabel));
         map.put(Constant.POST_ID, postId);
         map.put(Constant.IS_POST, true);
-        map.put(Constant.TIME_CREATED,System.currentTimeMillis()+"");
+        map.put(Constant.TIME_CREATED, System.currentTimeMillis() + "");
         FirebaseDatabase.getInstance().getReference().child(Constant.NOTIFICATIONS).child(publisherId).push().setValue(map);
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public final ImageView iv_ava;
+        public final ImageView iv_image;
+        public final ImageView iv_heart;
+        public final ImageView iv_comment;
+        public final ImageView iv_save;
+        public final ImageView iv_more;
+
+        public final TextView tv_user_name;
+        public final TextView tv_user_name2;
+        public final TextView tv_time_created;
+        //public final TextView tv_privacy;
+        public final TextView tv_description;
+        public final TextView tv_heart;
+        public final TextView tv_comment;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            iv_ava = itemView.findViewById(R.id.iv_ava);
+            iv_image = itemView.findViewById(R.id.iv_image);
+            iv_heart = itemView.findViewById(R.id.iv_heart);
+            iv_comment = itemView.findViewById(R.id.iv_comment);
+            iv_save = itemView.findViewById(R.id.iv_save);
+            iv_more = itemView.findViewById(R.id.iv_more);
+
+            tv_user_name = itemView.findViewById(R.id.tv_user_name);
+            tv_user_name2 = itemView.findViewById(R.id.tv_user_name2);
+            tv_time_created = itemView.findViewById(R.id.tv_time_created);
+            //tv_privacy = itemView.findViewById(R.id.tv_privacy);
+            tv_description = itemView.findViewById(R.id.tv_description);
+            tv_heart = itemView.findViewById(R.id.tv_heart);
+            tv_comment = itemView.findViewById(R.id.tv_comment);
+        }
     }
 }

@@ -12,22 +12,6 @@ public class User {
     private String status;
     private String last_seen;
 
-    public String getLast_seen() {
-        return last_seen;
-    }
-
-    public void setLast_seen(String last_seen) {
-        this.last_seen = last_seen;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public User() {
     }
 
@@ -53,6 +37,22 @@ public class User {
         this.image_url = image_url;
         this.phone_number = phone_number;
         this.dob = dob;
+    }
+
+    public String getLast_seen() {
+        return last_seen;
+    }
+
+    public void setLast_seen(String last_seen) {
+        this.last_seen = last_seen;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getId() {

@@ -24,14 +24,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 
 public class SignUpActivity extends AppCompatActivity {
-    private ActivitySignUpBinding binding;
-    private FirebaseAuth mAuth;
-    private DatabaseReference mRootRef;
-    ProgressDialog pd;
     public String EMAIL;
     public String PASSWORD;
     public String RE_PASSWORD;
     public String ID;
+    ProgressDialog pd;
+    private ActivitySignUpBinding binding;
+    private FirebaseAuth mAuth;
+    private DatabaseReference mRootRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -24,6 +24,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginLeft="5dp"
             android:layout_toRightOf="@id/iv_ava"
+            android:textColor="@color/black"
             android:background="@drawable/bg_right"
             android:padding="8dp"
             android:text="Hello"

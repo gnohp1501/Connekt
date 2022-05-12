@@ -1,9 +1,9 @@
 package com.example.connekt.view.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.connekt.R;
 
@@ -17,6 +17,7 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         startAnimation();
     }
+
     private void startAnimation() {
         mThread = new Thread() {
             @Override
@@ -32,7 +33,7 @@ public class SplashActivity extends AppCompatActivity {
                     waited += 100;
                 }
                 SplashActivity.this.finish();
-                Intent intent = new Intent(SplashActivity.this,SignInActivity.class);
+                Intent intent = new Intent(SplashActivity.this, SignInActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
             }

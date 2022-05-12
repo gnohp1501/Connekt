@@ -28,10 +28,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     private final Context mContext;
     private final List<Chat> mChats;
     private final String imageUrl;
-
+    FirebaseUser fuser;
     private Boolean isSeen = false;
     private int viewTypeSeen;
-    FirebaseUser fuser;
 
 
     public MessageAdapter(Context mContext, List<Chat> mChats, String imageUrl) {
@@ -95,6 +94,16 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         return mChats.size();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        fuser = FirebaseAuth.getInstance().getCurrentUser();
+        if (mChats.get(position).getSender().equals(fuser.getUid())) {
+            return MSG_TYPE_RIGHT;
+        } else {
+            return MSG_TYPE_LEFT;
+        }
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView text_send;
@@ -109,16 +118,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             text_send = itemView.findViewById(R.id.text_send);
             text_time = itemView.findViewById(R.id.text_time);
             isSeen = itemView.findViewById(R.id.text_seen);
-        }
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        fuser = FirebaseAuth.getInstance().getCurrentUser();
-        if (mChats.get(position).getSender().equals(fuser.getUid())) {
-            return MSG_TYPE_RIGHT;
-        } else {
-            return MSG_TYPE_LEFT;
         }
     }
 }

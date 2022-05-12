@@ -15,14 +15,6 @@ public class Notification {
     @SerializedName(Constant.IS_POST)
     private boolean isPost;
 
-    public String getTime_created() {
-        return time_created;
-    }
-
-    public void setTime_created(String time_created) {
-        this.time_created = time_created;
-    }
-
     public Notification(String user_id, String title, String post_id, String time_created, boolean isPost) {
         this.user_id = user_id;
         this.title = title;
@@ -39,6 +31,14 @@ public class Notification {
     }
 
     public Notification() {
+    }
+
+    public String getTime_created() {
+        return time_created;
+    }
+
+    public void setTime_created(String time_created) {
+        this.time_created = time_created;
     }
 
     public String getUser_id() {

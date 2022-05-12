@@ -7,11 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.connekt.R;
-import com.example.connekt.constant.Constant;
 import com.example.connekt.model.Post;
 import com.squareup.picasso.Picasso;
 

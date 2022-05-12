@@ -2,6 +2,7 @@ package com.example.connekt.model;
 
 import com.example.connekt.constant.Constant;
 import com.google.gson.annotations.SerializedName;
+
 public class Post {
     @SerializedName(Constant.DESCRIPTION)
     private String description;

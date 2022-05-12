@@ -22,7 +22,7 @@ import java.util.List;
 
 public class ListUserActivity extends AppCompatActivity {
     private ActivityListUserBinding binding;
-    private  String id;
+    private String id;
     private String title;
     private List<String> idList;
     //
@@ -70,6 +70,7 @@ public class ListUserActivity extends AppCompatActivity {
                 break;
         }
     }
+
     private void getFollowers() {
 
         FirebaseDatabase.getInstance().getReference().child(Constant.FOLLOW).child(id).child(Constant.FOLLOWERS).addValueEventListener(new ValueEventListener() {
@@ -122,6 +123,7 @@ public class ListUserActivity extends AppCompatActivity {
                 }
                 showUsers();
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 

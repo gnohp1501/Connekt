@@ -12,8 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.connekt.R;
-import com.example.connekt.adapter.UserAdapter;
 import com.example.connekt.adapter.UserChatAdapter;
 import com.example.connekt.model.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,11 +34,12 @@ public class UserChatFragment extends Fragment {
     private UserChatAdapter userAdapter;
     private List<User> mUsers;
     private EditText search_user;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_user,container,false);
+        View view = inflater.inflate(R.layout.fragment_user, container, false);
         recyclerViewUser = view.findViewById(R.id.recycleview_user);
         recyclerViewUser.setHasFixedSize(true);
         recyclerViewUser.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -50,8 +51,7 @@ public class UserChatFragment extends Fragment {
         return view;
     }
 
-    private void searchUser()
-    {
+    private void searchUser() {
         search_user.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -79,26 +79,21 @@ public class UserChatFragment extends Fragment {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(!search_user.getText().toString().equals(""))
-                {
+                if (!search_user.getText().toString().equals("")) {
                     mUsers.clear();
-                    for(DataSnapshot snap : snapshot.getChildren())
-                    {
+                    for (DataSnapshot snap : snapshot.getChildren()) {
                         User user = snap.getValue(User.class);
 
-                        assert user !=null;
+                        assert user != null;
                         assert firebaseUser != null;
-                        if(!user.getId().equals(firebaseUser.getUid()))
-                        {
+                        if (!user.getId().equals(firebaseUser.getUid())) {
                             user.getUser_name();
                             mUsers.add(user);
                         }
                     }
-                    userAdapter = new UserChatAdapter(getContext(),mUsers,false);
+                    userAdapter = new UserChatAdapter(getContext(), mUsers, false);
                     recyclerViewUser.setAdapter(userAdapter);
-                }
-                else
-                {
+                } else {
                     readUsers();
                 }
 
@@ -113,22 +108,20 @@ public class UserChatFragment extends Fragment {
 
     private void readUsers() {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference  reference = FirebaseDatabase.getInstance().getReference("users");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mUsers.clear();
-                for(DataSnapshot snap : snapshot.getChildren())
-                {
+                for (DataSnapshot snap : snapshot.getChildren()) {
                     User user = snap.getValue(User.class);
-                    assert user !=null;
+                    assert user != null;
                     assert firebaseUser != null;
-                    if(!user.getId().equals(firebaseUser.getUid()))
-                    {
+                    if (!user.getId().equals(firebaseUser.getUid())) {
                         mUsers.add(user);
                     }
                 }
-                userAdapter = new UserChatAdapter(getContext(),mUsers,true);
+                userAdapter = new UserChatAdapter(getContext(), mUsers, true);
                 recyclerViewUser.setAdapter(userAdapter);
             }
 

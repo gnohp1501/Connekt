@@ -33,10 +33,9 @@ import java.util.List;
 
 public class PersonFragment extends Fragment {
 
+    String profileId;
     private FragmentPersonBinding binding;
     private FirebaseUser fUser;
-    String profileId;
-
     private PhotoAdapter postAdapterSaves;
     private List<Post> mySavedPosts;
 
