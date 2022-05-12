@@ -1,10 +1,10 @@
 package com.example.connekt.model;
 
-public class Chatlist {
+public class ChatList {
     String id;
 
-    public Chatlist(String id) { this.id = id; }
-    public Chatlist() { }
+    public ChatList(String id) { this.id = id; }
+    public ChatList() { }
 
     public String getId() { return id; }
 

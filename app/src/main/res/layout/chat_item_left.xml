@@ -5,7 +5,7 @@
     android:padding="8dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/image_user"
+        android:id="@+id/iv_ava"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:src="@mipmap/ic_launcher" />
@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
-        android:layout_toRightOf="@id/image_user"
+        android:layout_toRightOf="@id/iv_ava"
         android:background="@drawable/bg_left"
         android:padding="8dp"
         android:text="Hello"

@@ -36,11 +36,58 @@ public class DateUtils {
             return diff / HOUR_MILLIS + " hours ago";
         } else if (diff < 48 * HOUR_MILLIS) {
             return "Yesterday";
-        } else if (diff < 3 * DAY_MILLIS){
+        } else if (diff < 3 * DAY_MILLIS) {
             return diff / DAY_MILLIS + " days ago";
         } else {
             Date date = new Date(time);
             SimpleDateFormat formatter = new SimpleDateFormat("EEE, d MMM yyyy");
+            String format = formatter.format(date);
+            return format;
+        }
+    }
+
+    public static String getTime(long time) {
+        if (time < 1000000000000L) {
+            time *= 1000;
+        }
+        long now = currentDate().getTime();
+
+        final long diff = now - time;
+        if (diff < 2 * MINUTE_MILLIS) {
+            return "A minute ago";
+        } else if (diff < 50 * MINUTE_MILLIS) {
+            return diff / MINUTE_MILLIS + " minutes ago";
+        } else if (diff < 90 * MINUTE_MILLIS) {
+            return "An hour ago";
+        } else if (diff < 24 * HOUR_MILLIS) {
+            return diff / HOUR_MILLIS + " hours ago";
+        } else if (diff < 48 * HOUR_MILLIS) {
+            return "Yesterday";
+        } else if (diff < 3 * DAY_MILLIS) {
+            return diff / DAY_MILLIS + " days ago";
+        } else {
+            Date date = new Date(time);
+            SimpleDateFormat formatter = new SimpleDateFormat("EEE, d MMM yyyy");
+            String format = formatter.format(date);
+            return format;
+        }
+    }
+
+    public static String getTimeMess(long time) {
+        if (time < 1000000000000L) {
+            time *= 1000;
+        }
+        long now = currentDate().getTime();
+
+        final long diff = now - time;
+        if (diff < 24 * HOUR_MILLIS) {
+            Date date = new Date(time);
+            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+            String format = formatter.format(date);
+            return "Today at " + format;
+        } else {
+            Date date = new Date(time);
+            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm dd MMMM yyyy");
             String format = formatter.format(date);
             return format;
         }

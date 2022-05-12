@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.connekt.R;
+import com.example.connekt.constant.Constant;
 import com.example.connekt.databinding.ActivityChatMainBinding;
 import com.example.connekt.model.User;
 import com.example.connekt.view.fragment.ChatFragment;
@@ -92,13 +93,13 @@ public class ChatMainActivity extends AppCompatActivity {
 
     public void setFirebaseUser() {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        databaseReference = FirebaseDatabase.getInstance().getReference("users").child(firebaseUser.getUid());
+        databaseReference = FirebaseDatabase.getInstance().getReference(Constant.USERS).child(firebaseUser.getUid());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
                 binding.tvUserName.setText(user.getUser_name());
-                if (user.getImage_url().equals("default")) {
+                if (user.getImage_url().equals(Constant.DEFAULT)) {
                     binding.ivAva.setImageResource(R.mipmap.ic_launcher);
                 } else {
                     Picasso.get().load(user.getImage_url()).into(binding.ivAva);
@@ -112,23 +113,31 @@ public class ChatMainActivity extends AppCompatActivity {
         });
     }
 
-    private void status(String status, String last_seen) {
-        databaseReference = FirebaseDatabase.getInstance().getReference("users").child(firebaseUser.getUid());
+    private void status(String status) {
+        databaseReference = FirebaseDatabase.getInstance().getReference(Constant.USERS).child(firebaseUser.getUid());
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("status", status);
-        hashMap.put("last_seen",last_seen);
+        hashMap.put(Constant.STATUS, status);
+        databaseReference.updateChildren(hashMap);
+    }
+
+    private void lastSeen(String last_seen) {
+        databaseReference = FirebaseDatabase.getInstance().getReference(Constant.USERS).child(firebaseUser.getUid());
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put(Constant.LAST_SEEN, last_seen);
         databaseReference.updateChildren(hashMap);
     }
 
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        status("online", "0");
+        status("online");
+        lastSeen("0");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        status("offline", System.currentTimeMillis() + "");
+        status("offline");
+        lastSeen(System.currentTimeMillis() + "");
     }
 }
