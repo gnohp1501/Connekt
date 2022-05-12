@@ -32,16 +32,15 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 
 public class EditProfileActivity extends AppCompatActivity {
-    private FirebaseUser fUser;
-    private ActivityEditProfileBinding binding;
-
-    private Uri filePathUri;
-    private String imageUrl;
     private final int PICK_IMAGE_REQUEST = 22;
-    FirebaseStorage storage;
-    StorageReference storageReference;
     private final int REQUEST_CODE = 1;
     private final int REQUEST_OKE = -1;
+    FirebaseStorage storage;
+    StorageReference storageReference;
+    private FirebaseUser fUser;
+    private ActivityEditProfileBinding binding;
+    private Uri filePathUri;
+    private String imageUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,23 +65,25 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
     }
+
     private void chooseImage() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, REQUEST_CODE);
     }
-    private void updateProfile()
-    {
-        HashMap<String,Object> map = new HashMap<>();
-        map.put(Constant.FULL_NAME,binding.etFullName.getText().toString());
-        map.put(Constant.USER_NAME,binding.etUserName.getText().toString());
-        map.put(Constant.BIO,binding.etBio.getText().toString());
+
+    private void updateProfile() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put(Constant.FULL_NAME, binding.etFullName.getText().toString());
+        map.put(Constant.USER_NAME, binding.etUserName.getText().toString());
+        map.put(Constant.BIO, binding.etBio.getText().toString());
         FirebaseDatabase.getInstance().getReference().child(Constant.USERS)
                 .child(fUser.getUid()).updateChildren(map);
         uploadImage();
         finish();
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -91,6 +92,7 @@ public class EditProfileActivity extends AppCompatActivity {
             binding.ivAva.setImageURI(filePathUri);
         }
     }
+
     private void uploadImage() {
         final ProgressDialog pd = new ProgressDialog(this);
         pd.setMessage("Uploading");
@@ -125,6 +127,7 @@ public class EditProfileActivity extends AppCompatActivity {
             Toast.makeText(this, "No image changed", Toast.LENGTH_SHORT).show();
         }
     }
+
     private void userInfo() {
         FirebaseDatabase.getInstance().getReference().child(Constant.USERS)
                 .child(fUser.getUid()).addValueEventListener(new ValueEventListener() {
@@ -142,6 +145,7 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
     }
+
     private String getFileExtension(Uri uri) {
         return MimeTypeMap.getSingleton().getExtensionFromMimeType(getContentResolver().getType(uri));
     }

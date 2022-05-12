@@ -43,6 +43,7 @@ public class MessActivity extends AppCompatActivity {
     CircleImageView image_user;
     TextView username_user;
     TextView last_seen;
+    ImageView iv_close;
 
     FirebaseUser firebaseUser;
     DatabaseReference databaseReference;
@@ -65,6 +66,13 @@ public class MessActivity extends AppCompatActivity {
         init();
         setFirebaseUser();
         setButton_send();
+        iv_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MessActivity.this, ChatMainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public void init() {
@@ -73,6 +81,7 @@ public class MessActivity extends AppCompatActivity {
         last_seen = findViewById(R.id.tv_last_seen);
         button_send = findViewById(R.id.button_send);
         text_send = findViewById(R.id.text_send);
+        iv_close = findViewById(R.id.iv_close);
         recyclerview_mess = findViewById(R.id.recyclerview_mess);
         recyclerview_mess.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());

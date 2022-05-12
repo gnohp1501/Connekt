@@ -1,7 +1,6 @@
 package com.example.connekt.view.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.connekt.R;
 import com.example.connekt.adapter.NotificationsAdapter;
-import com.example.connekt.adapter.UserAdapter;
 import com.example.connekt.constant.Constant;
 import com.example.connekt.databinding.FragmentFavoriteBinding;
-import com.example.connekt.databinding.FragmentSearchBinding;
 import com.example.connekt.model.Notification;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -33,6 +29,7 @@ public class FavoriteFragment extends Fragment {
     private FragmentFavoriteBinding binding;
     private NotificationsAdapter notificationAdapter;
     private List<Notification> notificationList;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -50,6 +47,7 @@ public class FavoriteFragment extends Fragment {
 
         return view;
     }
+
     private void readNotifications() {
 
         FirebaseDatabase.getInstance().getReference().child(Constant.NOTIFICATIONS).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
@@ -62,6 +60,7 @@ public class FavoriteFragment extends Fragment {
                 Collections.reverse(notificationList);
                 notificationAdapter.notifyDataSetChanged();
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 

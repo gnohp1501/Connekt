@@ -16,13 +16,11 @@ import com.example.connekt.databinding.FragmentHomeBinding;
 import com.example.connekt.model.Post;
 import com.example.connekt.model.User;
 import com.example.connekt.view.activity.ChatMainActivity;
-import com.example.connekt.view.activity.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,14 +51,15 @@ public class HomeFragment extends Fragment {
         binding.message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(),ChatMainActivity.class);
-                ((MainActivity) getActivity()).startActivity(intent);
+                Intent intent = new Intent(getActivity(), ChatMainActivity.class);
+                getActivity().startActivity(intent);
             }
         });
         checkFollowingUsers();
         userInfo();
         return view;
     }
+
     private void userInfo() {
         FirebaseDatabase.getInstance().getReference().child(Constant.USERS)
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
@@ -76,6 +75,7 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
     private void checkFollowingUsers() {
         FirebaseDatabase.getInstance().getReference().child(Constant.FOLLOW).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(Constant.FOLLOWING).addValueEventListener(new ValueEventListener() {
             @Override
@@ -87,6 +87,7 @@ public class HomeFragment extends Fragment {
                 followingList.add(FirebaseAuth.getInstance().getCurrentUser().getUid());
                 readPosts();
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 

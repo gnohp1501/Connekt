@@ -29,11 +29,10 @@ import java.util.List;
 
 public class ChatFragment extends Fragment {
 
-    private RecyclerView recyclerView;
-    private UserChatAdapter userAdapter;
-
     FirebaseUser firebaseUser;
     DatabaseReference reference;
+    private RecyclerView recyclerView;
+    private UserChatAdapter userAdapter;
     private List<ChatList> listChat;
 
     private List<User> mUser;

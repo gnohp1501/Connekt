@@ -36,14 +36,14 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 
 public class AddFragment extends Fragment {
+    private final int PICK_IMAGE_REQUEST = 22;
+    private final int REQUEST_CODE = 1;
+    private final int REQUEST_OKE = -1;
+    FirebaseStorage storage;
+    StorageReference storageReference;
     private FragmentAddBinding binding;
     private Uri filePathUri;
     private String imageUrl;
-    private final int PICK_IMAGE_REQUEST = 22;
-    FirebaseStorage storage;
-    StorageReference storageReference;
-    private final int REQUEST_CODE = 1;
-    private final int REQUEST_OKE = -1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,6 +76,7 @@ public class AddFragment extends Fragment {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, REQUEST_CODE);
     }
+
     private void userInfo() {
         FirebaseDatabase.getInstance().getReference().child(Constant.USERS)
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
@@ -92,6 +93,7 @@ public class AddFragment extends Fragment {
             }
         });
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

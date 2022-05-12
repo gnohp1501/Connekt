@@ -8,18 +8,18 @@ public class Chat {
     private String date;
     private String time;
     private boolean isSeen;
-    public Chat()
-    {
+
+    public Chat() {
 
     }
 
-    public Chat(String sender, String receiver, String mess, String date, String time,boolean isseen) {
+    public Chat(String sender, String receiver, String mess, String date, String time, boolean isseen) {
         this.sender = sender;
         this.receiver = receiver;
         this.mess = mess;
         this.date = date;
         this.time = time;
-        this.isSeen =isseen;
+        this.isSeen = isseen;
     }
 
     public String getSender() {
@@ -62,7 +62,11 @@ public class Chat {
         this.time = time;
     }
 
-    public boolean isSeen() { return isSeen; }
+    public boolean isSeen() {
+        return isSeen;
+    }
 
-    public void setSeen(boolean seen) { this.isSeen = seen; }
+    public void setSeen(boolean seen) {
+        this.isSeen = seen;
+    }
 }

@@ -47,7 +47,7 @@ public class Constant {
     public static final String TIME = "time";
     public static final String IS_SEEN = "is_seen";
     public static final String CHATS = "chats";
-    public static final String CHAT_LIST = "chat_list" ;
+    public static final String CHAT_LIST = "chat_list";
     public static final String STATUS = "status";
     public static final String LAST_SEEN = "last_seen";
 }

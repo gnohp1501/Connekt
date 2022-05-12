@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.connekt.R;
 import com.example.connekt.constant.Constant;
 import com.example.connekt.model.Comment;
 import com.example.connekt.model.User;
@@ -26,20 +27,19 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-import com.example.connekt.R;
+
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> {
 
-    private Context mContext;
-    private List<Comment> mComments;
+    private final Context mContext;
+    private final List<Comment> mComments;
     String postId;
-
     private FirebaseUser fUser;
 
-    public CommentAdapter(Context mContext, List<Comment> mComments,String postId) {
+    public CommentAdapter(Context mContext, List<Comment> mComments, String postId) {
         this.mContext = mContext;
         this.mComments = mComments;
         this.postId = postId;
@@ -48,7 +48,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.comment_item,parent,false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.comment_item, parent, false);
         return new CommentAdapter.ViewHolder(view);
     }
 
@@ -65,13 +65,10 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 holder.username.setText(user.getUser_name());
-                if(user.getImage_url().equals(Constant.DEFAULT))
-                {
+                if (user.getImage_url().equals(Constant.DEFAULT)) {
                     holder.imageProfile.setImageResource(R.mipmap.ic_launcher);
 
-                }
-                else
-                {
+                } else {
                     Picasso.get().load(user.getImage_url()).into(holder.imageProfile);
 
                 }
@@ -86,7 +83,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, MainActivity.class);
-                intent.putExtra(Constant.PUBLISHER_ID,comment.getPublisher());
+                intent.putExtra(Constant.PUBLISHER_ID, comment.getPublisher());
                 mContext.startActivity(intent);
 
 
@@ -96,15 +93,14 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, MainActivity.class);
-                intent.putExtra(Constant.PUBLISHER_ID,comment.getPublisher());
+                intent.putExtra(Constant.PUBLISHER_ID, comment.getPublisher());
                 mContext.startActivity(intent);
             }
         });
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if(comment.getPublisher().endsWith(fUser.getUid()))
-                {
+                if (comment.getPublisher().endsWith(fUser.getUid())) {
                     AlertDialog alertDialog = new AlertDialog.Builder(mContext).create();
                     alertDialog.setTitle(R.string.deleteLabel);
                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, mContext.getString(R.string.noLabel), new DialogInterface.OnClickListener() {
@@ -121,9 +117,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                                     .child(postId).child(comment.getId()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful())
-                                    {
-                                        Toast.makeText(mContext,mContext.getString(R.string.deleteCommentSuccessLabel),Toast.LENGTH_SHORT).show();
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(mContext, mContext.getString(R.string.deleteCommentSuccessLabel), Toast.LENGTH_SHORT).show();
                                         dialog.dismiss();
                                     }
                                 }

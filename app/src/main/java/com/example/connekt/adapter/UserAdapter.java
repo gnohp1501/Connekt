@@ -131,6 +131,16 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         return mUsers.size();
     }
 
+    private void addNotification(String userId) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put(Constant.USER_ID, firebaseUser.getUid());
+        map.put(Constant.TITLE, mContext.getString(R.string.followyouLabel));
+        map.put(Constant.POST_ID, "");
+        map.put(Constant.IS_POST, false);
+        map.put(Constant.TIME_CREATED, System.currentTimeMillis() + "");
+        FirebaseDatabase.getInstance().getReference().child(Constant.NOTIFICATIONS).child(userId).push().setValue(map);
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public CircleImageView iv_ava;
@@ -146,16 +156,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             tv_full_name = itemView.findViewById(R.id.tv_full_name);
             btn_Follow = itemView.findViewById(R.id.but_follow);
         }
-    }
-
-    private void addNotification(String userId) {
-        HashMap<String, Object> map = new HashMap<>();
-        map.put(Constant.USER_ID, firebaseUser.getUid());
-        map.put(Constant.TITLE, mContext.getString(R.string.followyouLabel));
-        map.put(Constant.POST_ID, "");
-        map.put(Constant.IS_POST, false);
-        map.put(Constant.TIME_CREATED,System.currentTimeMillis()+"");
-        FirebaseDatabase.getInstance().getReference().child(Constant.NOTIFICATIONS).child(userId).push().setValue(map);
     }
 
 }
