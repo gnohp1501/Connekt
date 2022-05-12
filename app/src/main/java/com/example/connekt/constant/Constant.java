@@ -16,7 +16,7 @@ public class Constant {
     public static final String DESCRIPTION = "description";
     public static final String PUBLISHER = "publisher";
     public static final String TIME_CREATED = "time_created";
-    public static final String USER_ID ="user_id";
+    public static final String USER_ID = "user_id";
     public static final String TITLE = "title";
     public static final String IS_POST = "is_post";
     public static final String FOLLOW_YOU = " start follow you.";
@@ -32,7 +32,7 @@ public class Constant {
     public static final String DEFAULT = "default";
 
 
-    public static final String AUTHOR_ID ="author_id" ;
+    public static final String AUTHOR_ID = "author_id";
     public static final String SAVE = "save";
     public static final String PROFILE = "profile";
     public static final String PROFILE_ID = "profile_id";
@@ -40,4 +40,14 @@ public class Constant {
     public static final String LIKED = "liked";
     public static final String NOTIFICATIONS = "notifications";
     public static final String FOLLOWINGS = "followings";
+    public static final String SENDER = "sender";
+    public static final String RECEIVER = "receiver";
+    public static final String MESS = "mess";
+    public static final String DATE = "date";
+    public static final String TIME = "time";
+    public static final String IS_SEEN = "is_seen";
+    public static final String CHATS = "chats";
+    public static final String CHAT_LIST = "chat_list" ;
+    public static final String STATUS = "status";
+    public static final String LAST_SEEN = "last_seen";
 }

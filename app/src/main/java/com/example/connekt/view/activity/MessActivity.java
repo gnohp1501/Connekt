@@ -1,6 +1,6 @@
 package com.example.connekt.view.activity;
 
-import static com.example.connekt.utils.DateUtils.getTimeAgo;
+import static com.example.connekt.utils.DateUtils.getTime;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.connekt.R;
 import com.example.connekt.adapter.MessageAdapter;
+import com.example.connekt.constant.Constant;
 import com.example.connekt.model.Chat;
 import com.example.connekt.model.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -67,8 +68,8 @@ public class MessActivity extends AppCompatActivity {
     }
 
     public void init() {
-        image_user = findViewById(R.id.image_user);
-        username_user = findViewById(R.id.username_user);
+        image_user = findViewById(R.id.iv_ava);
+        username_user = findViewById(R.id.tv_user_name);
         last_seen = findViewById(R.id.tv_last_seen);
         button_send = findViewById(R.id.button_send);
         text_send = findViewById(R.id.text_send);
@@ -81,21 +82,25 @@ public class MessActivity extends AppCompatActivity {
 
     public void setFirebaseUser() {
         intent = getIntent();
-        userid = intent.getStringExtra("userid");
+        userid = intent.getStringExtra(Constant.USER_ID);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        databaseReference = FirebaseDatabase.getInstance().getReference("users").child(userid);
+        databaseReference = FirebaseDatabase.getInstance().getReference(Constant.USERS).child(userid);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
                 username_user.setText(user.getUser_name());
-                if (user.getImage_url().equals("default")) {
+                if (user.getImage_url().equals(Constant.DEFAULT)) {
                     image_user.setImageResource(R.mipmap.ic_launcher);
                 } else {
                     Picasso.get().load(user.getImage_url()).into(image_user);
                 }
-                last_seen.setText("Last seen in " + getTimeAgo(Long.parseLong(user.getLast_seen())));
+                if (user.getStatus().equals("online")) {
+                    last_seen.setText("Active");
+                } else {
+                    last_seen.setText("Last seen in " + getTime(Long.parseLong(user.getLast_seen())));
+                }
                 readMess(firebaseUser.getUid(), userid, user.getImage_url());
             }
 
@@ -110,22 +115,22 @@ public class MessActivity extends AppCompatActivity {
     private void sendMess(String sender, String receiver, String mess) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("sender", sender);
-        hashMap.put("receiver", receiver);
-        hashMap.put("mess", mess);
-        hashMap.put("date", System.currentTimeMillis() + "");
-        hashMap.put("time", System.currentTimeMillis() + "");
-        hashMap.put("isseen", false);
-        reference.child("chats").push().setValue(hashMap);
+        hashMap.put(Constant.SENDER, sender);
+        hashMap.put(Constant.RECEIVER, receiver);
+        hashMap.put(Constant.MESS, mess);
+        hashMap.put(Constant.DATE, System.currentTimeMillis() + "");
+        hashMap.put(Constant.TIME, System.currentTimeMillis() + "");
+        hashMap.put(Constant.IS_SEEN, false);
+        reference.child(Constant.CHATS).push().setValue(hashMap);
 
-        DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference("chatlist")
+        DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference(Constant.CHAT_LIST)
                 .child(firebaseUser.getUid())
                 .child(userid);
         chatRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!snapshot.exists()) {
-                    chatRef.child("id").setValue(userid);
+                    chatRef.child(Constant.ID).setValue(userid);
                 }
             }
 
@@ -138,7 +143,7 @@ public class MessActivity extends AppCompatActivity {
     }
 
     private void seenMess(String userid) {
-        databaseReference = FirebaseDatabase.getInstance().getReference("chats");
+        databaseReference = FirebaseDatabase.getInstance().getReference(Constant.CHATS);
         seenListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -147,7 +152,7 @@ public class MessActivity extends AppCompatActivity {
                     if (chat.getReceiver().equals(firebaseUser.getUid()) &&
                             chat.getSender().equals(userid)) {
                         HashMap<String, Object> hashMap = new HashMap<>();
-                        hashMap.put("isseen", true);
+                        hashMap.put(Constant.IS_SEEN, true);
                         snap.getRef().updateChildren(hashMap);
                     }
                 }
@@ -177,21 +182,21 @@ public class MessActivity extends AppCompatActivity {
         });
     }
 
-    private void readMess(final String myid, final String userid, final String imageurl) {
+    private void readMess(final String myID, final String userid, final String imageUrl) {
         mChat = new ArrayList<>();
-        databaseReference = FirebaseDatabase.getInstance().getReference("chats");
+        databaseReference = FirebaseDatabase.getInstance().getReference(Constant.CHATS);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mChat.clear();
                 for (DataSnapshot snap : snapshot.getChildren()) {
                     Chat chat = snap.getValue(Chat.class);
-                    if (chat.getReceiver().equals(myid) && chat.getSender().equals(userid) ||
-                            chat.getReceiver().equals(userid) && chat.getSender().equals(myid)
+                    if (chat.getReceiver().equals(myID) && chat.getSender().equals(userid) ||
+                            chat.getReceiver().equals(userid) && chat.getSender().equals(myID)
                     ) {
                         mChat.add(chat);
                     }
-                    messageAdapter = new MessageAdapter(MessActivity.this, mChat, imageurl);
+                    messageAdapter = new MessageAdapter(MessActivity.this, mChat, imageUrl);
                     recyclerview_mess.setAdapter(messageAdapter);
                 }
             }
@@ -204,9 +209,16 @@ public class MessActivity extends AppCompatActivity {
     }
 
     private void status(String status) {
-        databaseReference = FirebaseDatabase.getInstance().getReference("users").child(firebaseUser.getUid());
+        databaseReference = FirebaseDatabase.getInstance().getReference(Constant.USERS).child(firebaseUser.getUid());
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("status", status);
+        hashMap.put(Constant.STATUS, status);
+        databaseReference.updateChildren(hashMap);
+    }
+
+    private void lastSeen(String last_seen) {
+        databaseReference = FirebaseDatabase.getInstance().getReference(Constant.USERS).child(firebaseUser.getUid());
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put(Constant.LAST_SEEN, last_seen);
         databaseReference.updateChildren(hashMap);
     }
 
@@ -214,6 +226,7 @@ public class MessActivity extends AppCompatActivity {
     protected void onPostResume() {
         super.onPostResume();
         status("online");
+        lastSeen("0");
     }
 
     @Override
@@ -221,5 +234,6 @@ public class MessActivity extends AppCompatActivity {
         super.onPause();
         databaseReference.removeEventListener(seenListener);
         status("offline");
+        lastSeen(System.currentTimeMillis() + "");
     }
 }

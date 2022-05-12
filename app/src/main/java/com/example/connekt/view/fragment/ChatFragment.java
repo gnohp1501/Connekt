@@ -11,9 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.connekt.R;
-import com.example.connekt.adapter.UserAdapter;
 import com.example.connekt.adapter.UserChatAdapter;
-import com.example.connekt.model.Chatlist;
+import com.example.connekt.constant.Constant;
+import com.example.connekt.model.ChatList;
 import com.example.connekt.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -34,7 +34,7 @@ public class ChatFragment extends Fragment {
 
     FirebaseUser firebaseUser;
     DatabaseReference reference;
-    private List<Chatlist> listChat;
+    private List<ChatList> listChat;
 
     private List<User> mUser;
 
@@ -48,9 +48,8 @@ public class ChatFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        //usersList = new ArrayList<>();
         listChat = new ArrayList<>();
-        reference = FirebaseDatabase.getInstance().getReference("chatlist")
+        reference = FirebaseDatabase.getInstance().getReference(Constant.CHAT_LIST)
                 .child(firebaseUser.getUid());
 
         reference.addValueEventListener(new ValueEventListener() {
@@ -58,7 +57,7 @@ public class ChatFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 listChat.clear();
                 for (DataSnapshot snap : snapshot.getChildren()) {
-                    Chatlist chatlist = snap.getValue(Chatlist.class);
+                    ChatList chatlist = snap.getValue(ChatList.class);
                     listChat.add(chatlist);
                 }
                 chatList();
@@ -100,14 +99,14 @@ public class ChatFragment extends Fragment {
 
     private void chatList() {
         mUser = new ArrayList<>();
-        reference = FirebaseDatabase.getInstance().getReference("users");
+        reference = FirebaseDatabase.getInstance().getReference(Constant.USERS);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mUser.clear();
                 for (DataSnapshot snap : snapshot.getChildren()) {
                     User user = snap.getValue(User.class);
-                    for (Chatlist list : listChat) {
+                    for (ChatList list : listChat) {
                         if (user.getId().equals(list.getId())) {
                             mUser.add(user);
                         }

@@ -75,10 +75,10 @@ public class EditProfileActivity extends AppCompatActivity {
     private void updateProfile()
     {
         HashMap<String,Object> map = new HashMap<>();
-        map.put("full_name",binding.etFullName.getText().toString());
-        map.put("user_name",binding.etUserName.getText().toString());
-        map.put("bio",binding.etBio.getText().toString());
-        FirebaseDatabase.getInstance().getReference().child("users")
+        map.put(Constant.FULL_NAME,binding.etFullName.getText().toString());
+        map.put(Constant.USER_NAME,binding.etUserName.getText().toString());
+        map.put(Constant.BIO,binding.etBio.getText().toString());
+        FirebaseDatabase.getInstance().getReference().child(Constant.USERS)
                 .child(fUser.getUid()).updateChildren(map);
         uploadImage();
         finish();

@@ -7,7 +7,7 @@ public class Chat {
     private String mess;
     private String date;
     private String time;
-    private boolean isseen;
+    private boolean isSeen;
     public Chat()
     {
 
@@ -19,7 +19,7 @@ public class Chat {
         this.mess = mess;
         this.date = date;
         this.time = time;
-        this.isseen=isseen;
+        this.isSeen =isseen;
     }
 
     public String getSender() {
@@ -62,7 +62,7 @@ public class Chat {
         this.time = time;
     }
 
-    public boolean isIsseen() { return isseen; }
+    public boolean isSeen() { return isSeen; }
 
-    public void setIsseen(boolean isseen) { this.isseen = isseen; }
+    public void setSeen(boolean seen) { this.isSeen = seen; }
 }

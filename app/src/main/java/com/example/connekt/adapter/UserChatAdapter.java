@@ -1,5 +1,7 @@
 package com.example.connekt.adapter;
 
+import static com.example.connekt.utils.DateUtils.getTimeMess;
+
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -10,7 +12,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.connekt.R;
+import com.example.connekt.constant.Constant;
 import com.example.connekt.model.Chat;
 import com.example.connekt.model.User;
 import com.example.connekt.view.activity.MessActivity;
@@ -28,21 +32,22 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserChatAdapter extends RecyclerView.Adapter<UserChatAdapter.ViewHolder> {
-    private Context mContext;
-    private List<User> mUsers;
-    private boolean isChat;
-    String thelastmess;
+    private final Context mContext;
+    private final List<User> mUsers;
+    private final boolean isChat;
+    String theLastMess;
+    String timeTheLastMess;
 
     public UserChatAdapter(Context mContext, List<User> mUsers, boolean isChat) {
         this.mContext = mContext;
         this.mUsers = mUsers;
-        this.isChat=isChat;
+        this.isChat = isChat;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.user_item_chat,parent,false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.user_item_chat, parent, false);
 
         return new UserChatAdapter.ViewHolder(view);
     }
@@ -51,45 +56,34 @@ public class UserChatAdapter extends RecyclerView.Adapter<UserChatAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         User user = mUsers.get(position);
         holder.username.setText(user.getUser_name());
-        if(user.getImage_url().equals("default"))
-        {
+        if (user.getImage_url().equals(Constant.DEFAULT)) {
             holder.imageView.setImageResource(R.mipmap.ic_launcher);
-        }else
-        {
+        } else {
             Picasso.get().load(user.getImage_url()).into(holder.imageView);
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, MessActivity.class);
-                intent.putExtra("userid",user.getId());
+                intent.putExtra(Constant.USER_ID, user.getId());
                 mContext.startActivity(intent);
             }
         });
-        if(isChat)
-        {
-            if(user.getStatus().equals("online"))
-            {
+        if (isChat) {
+            if (user.getStatus().equals("online")) {
                 holder.status_on.setVisibility(View.VISIBLE);
                 holder.status_off.setVisibility(View.GONE);
-            }
-            else
-            {
+            } else {
                 holder.status_on.setVisibility(View.GONE);
                 holder.status_off.setVisibility(View.VISIBLE);
             }
-        }
-        else
-        {
+        } else {
             holder.status_on.setVisibility(View.GONE);
             holder.status_off.setVisibility(View.GONE);
         }
-        if(isChat)
-        {
-            lastMess(user.getId(), holder.last_mess);
-        }
-        else
-        {
+        if (isChat) {
+            lastMess(user.getId(), holder.last_mess, holder.time);
+        } else {
             holder.last_mess.setVisibility(View.GONE);
         }
 
@@ -107,45 +101,49 @@ public class UserChatAdapter extends RecyclerView.Adapter<UserChatAdapter.ViewHo
         public CircleImageView status_on;
         public CircleImageView status_off;
         public TextView last_mess;
+        public TextView time;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            username = itemView.findViewById(R.id.listusername_user);
-            imageView=itemView.findViewById(R.id.listimage_user);
-            status_on=itemView.findViewById(R.id.status_on);
-            status_off=itemView.findViewById(R.id.status_off);
-            last_mess = itemView.findViewById(R.id.last_mess);
+            username = itemView.findViewById(R.id.tv_user_name);
+            imageView = itemView.findViewById(R.id.iv_ava);
+            status_on = itemView.findViewById(R.id.status_on);
+            status_off = itemView.findViewById(R.id.status_off);
+            last_mess = itemView.findViewById(R.id.tv_last_mess);
+            time = itemView.findViewById(R.id.tv_time_last);
         }
     }
-    public void lastMess(String userid,TextView last_mess)
-    {
-        thelastmess = "default";
+
+    public void lastMess(String userid, TextView last_mess, TextView time) {
+        theLastMess = "default";
+        timeTheLastMess = "0";
         final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("chats");
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot snap : snapshot.getChildren())
-                {
+                for (DataSnapshot snap : snapshot.getChildren()) {
                     Chat chat = snap.getValue(Chat.class);
-                    if(chat.getReceiver().equals(firebaseUser.getUid()) && chat.getSender().equals(userid)
-                            ||chat.getReceiver().equals(userid) && chat.getSender().equals(firebaseUser.getUid()))
-                    {
-                        thelastmess = chat.getMess();
+                    if (chat.getReceiver().equals(firebaseUser.getUid()) && chat.getSender().equals(userid)
+                            || chat.getReceiver().equals(userid) && chat.getSender().equals(firebaseUser.getUid())) {
+                        theLastMess = chat.getMess();
+                        timeTheLastMess = chat.getTime();
                     }
                 }
-                switch (thelastmess)
-                {
+                switch (theLastMess) {
                     case "default":
                         last_mess.setText("No message !");
+                        time.setText("");
                         break;
                     default:
-                        last_mess.setText(thelastmess);
+                        last_mess.setText(theLastMess);
+                        time.setText(getTimeMess(Long.parseLong(timeTheLastMess)));
                         break;
                 }
-                thelastmess = "default";
+                theLastMess = "default";
+                timeTheLastMess = "0";
             }
 
             @Override

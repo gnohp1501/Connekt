@@ -12,4 +12,6 @@
     <string name="yesLabel">YES</string>
     <string name="deleteCommentSuccessLabel">comment deleted</string>
     <string name="likedYourPostLabel">Liked your post</string>
+    <string name="seenLabel">seen</string>
+    <string name="deliveriedLabel">Deliveried</string>
 </resources>

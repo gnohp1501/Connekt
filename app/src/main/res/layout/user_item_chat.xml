@@ -1,61 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    >
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@mipmap/ic_launcher_round"
-        android:id="@+id/listimage_user"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"/>
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:id="@+id/status_on"
-        android:src="#00ff00"
-        android:layout_toRightOf="@id/listimage_user"
-        android:visibility="gone"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="-25dp"/>
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:id="@+id/status_off"
-        android:src=" #c0c0c0"
-        android:layout_toRightOf="@id/listimage_user"
-        android:visibility="gone"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="-25dp"/>
+    android:layout_margin="10dp"
+    android:background="@drawable/background_post">
 
-    <TextView
+    <RelativeLayout
+        android:id="@id/layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_ava"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:src="@mipmap/ic_launcher_round" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/status_on"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginLeft="-25dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/iv_ava"
+            android:src="#00ff00"
+            android:visibility="gone" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/status_off"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginLeft="-25dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/iv_ava"
+            android:src=" #c0c0c0"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:text="USER NAME"
-        android:id="@+id/listusername_user"
-        android:layout_toRightOf="@id/listimage_user"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="10dp"
-        android:textSize="20dp"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/listimage_user"
-        android:id="@+id/last_mess"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="30dp"
-        android:maxLines="1"
-        android:maxLength="20"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/time"
-        android:text="19:00"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="330dp"
-        />
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toRightOf="@id/layout"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/tv_last_mess"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="40dp"
+        android:maxLength="20"
+        android:maxLines="1"
+        android:text="123"
+        android:textColor="@color/black_50"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toRightOf="@id/layout"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_time_last"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="50dp"
+        android:text="Today at 19:00"
+        android:textColor="@color/black_50"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

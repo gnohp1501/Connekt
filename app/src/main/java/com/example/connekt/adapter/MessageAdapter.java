@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.connekt.R;
+import com.example.connekt.constant.Constant;
 import com.example.connekt.model.Chat;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,17 +27,17 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     private final Context mContext;
     private final List<Chat> mChats;
-    private final String imageurl;
+    private final String imageUrl;
 
     private Boolean isSeen = false;
     private int viewTypeSeen;
     FirebaseUser fuser;
 
 
-    public MessageAdapter(Context mContext, List<Chat> mChats, String imageurl) {
+    public MessageAdapter(Context mContext, List<Chat> mChats, String imageUrl) {
         this.mContext = mContext;
         this.mChats = mChats;
-        this.imageurl = imageurl;
+        this.imageUrl = imageUrl;
     }
 
     @NonNull
@@ -59,30 +60,30 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Chat chat = mChats.get(position);
         holder.text_send.setText(chat.getMess());
-        if (imageurl.equals("default")) {
+        if (imageUrl.equals(Constant.DEFAULT)) {
             holder.imageView.setImageResource(R.mipmap.ic_launcher);
         } else {
-            Picasso.get().load(imageurl).into(holder.imageView);
+            Picasso.get().load(imageUrl).into(holder.imageView);
         }
         holder.text_time.setText(getTimeAgo(Long.parseLong(chat.getTime())));
         if (position == mChats.size() - 1) {
-            if (chat.isIsseen()) {
-                holder.isseen.setText("Seen");
+            if (chat.isSeen()) {
+                holder.isSeen.setText(mContext.getString(R.string.seenLabel));
             } else {
-                holder.isseen.setText("Delivered");
+                holder.isSeen.setText(mContext.getString(R.string.deliveriedLabel));
             }
         } else {
-            holder.isseen.setVisibility(View.GONE);
+            holder.isSeen.setVisibility(View.GONE);
         }
         holder.text_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 isSeen = !isSeen;
                 if (isSeen) {
-                    holder.isseen.setVisibility(View.VISIBLE);
+                    holder.isSeen.setVisibility(View.VISIBLE);
                     holder.text_time.setVisibility(View.VISIBLE);
                 } else {
-                    holder.isseen.setVisibility(View.GONE);
+                    holder.isSeen.setVisibility(View.GONE);
                     holder.text_time.setVisibility(View.GONE);
                 }
             }
@@ -99,15 +100,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         public TextView text_send;
         public ImageView imageView;
         public TextView text_time;
-        public TextView isseen;
+        public TextView isSeen;
 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.image_user);
+            imageView = itemView.findViewById(R.id.iv_ava);
             text_send = itemView.findViewById(R.id.text_send);
             text_time = itemView.findViewById(R.id.text_time);
-            isseen = itemView.findViewById(R.id.text_seen);
+            isSeen = itemView.findViewById(R.id.text_seen);
         }
     }
 
