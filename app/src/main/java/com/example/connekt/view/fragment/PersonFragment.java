@@ -49,11 +49,14 @@ public class PersonFragment extends Fragment {
         View view = binding.getRoot();
         fUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        String data = getContext().getSharedPreferences(Constant.PROFILE, Context.MODE_PRIVATE).getString(Constant.PROFILE_ID, "none");
-        if (data.equals("none")) {
+        String data = getContext().getSharedPreferences(Constant.PROFILE, Context.MODE_PRIVATE).getString(Constant.PROFILE_ID, Constant.NONE);
+        if (data.equals(Constant.NONE)) {
             profileId = fUser.getUid();
         } else {
             profileId = data;
+            binding.ibmSavedPictures.setVisibility(View.GONE);
+            binding.ibmMyPictures.setVisibility(View.GONE);
+            binding.tvTextAlbum.setVisibility(View.VISIBLE);
             getContext().getSharedPreferences(Constant.PROFILE, Context.MODE_PRIVATE).edit().clear().apply();
         }
         userInfo();
@@ -98,11 +101,27 @@ public class PersonFragment extends Fragment {
                 startActivity(new Intent(getContext(), EditProfileActivity.class));
             }
         });
+        binding.butEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String btnText = binding.butEdit.getText().toString();
+                if (btnText.equals(Constant.FOLLOW)) {
+                    FirebaseDatabase.getInstance().getReference().child(Constant.FOLLOW).child(fUser.getUid())
+                            .child(Constant.FOLLOWING).child(profileId).setValue(true);
+                    FirebaseDatabase.getInstance().getReference().child(Constant.FOLLOW).child(profileId)
+                            .child(Constant.FOLLOWERS).child(fUser.getUid()).setValue(true);
+                } else {
+                    FirebaseDatabase.getInstance().getReference().child(Constant.FOLLOW).child(fUser.getUid())
+                            .child(Constant.FOLLOWING).child(profileId).removeValue();
+                    FirebaseDatabase.getInstance().getReference().child(Constant.FOLLOW).child(profileId)
+                            .child(Constant.FOLLOWERS).child(fUser.getUid()).removeValue();
+                }
+            }
+        });
         return view;
     }
 
     private void checkFollowingStatus() {
-
         FirebaseDatabase.getInstance().getReference().child(Constant.FOLLOW)
                 .child(fUser.getUid()).child(Constant.FOLLOWING).addValueEventListener(new ValueEventListener() {
             @Override
@@ -144,9 +163,7 @@ public class PersonFragment extends Fragment {
                                     for (String id : savedIds) {
                                         if (post.getPost_id().equals(id)) {
                                             mySavedPosts.add(post);
-
                                         }
-
                                     }
                                 }
                                 postAdapterSaves.notifyDataSetChanged();

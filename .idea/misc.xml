@@ -11,6 +11,7 @@
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/drawable/background_chat.xml" value="0.259" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/drawable/background_edittext.xml" value="0.259" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/drawable/background_post.xml" value="0.2495" />
+        <entry key="..\:/ProjectTT/Connekt/app/src/main/res/drawable/background_post_notseen.xml" value="0.251" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/drawable/border_image.xml" value="0.1" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/drawable/color_gradient.xml" value="0.1935" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/drawable/fab_gradient.xml" value="0.1195" />
@@ -86,6 +87,7 @@
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/layout/test_main.xml" value="0.16" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/layout/user_item.xml" value="0.2" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/layout/user_item_chat.xml" value="0.33" />
+        <entry key="..\:/ProjectTT/Connekt/app/src/main/res/layout/user_item_chat_notseen.xml" value="0.25" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/menu/menu.xml" value="0.24293785310734464" />
       </map>
     </option>

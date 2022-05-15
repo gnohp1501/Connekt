@@ -35,8 +35,11 @@ public class UserChatAdapter extends RecyclerView.Adapter<UserChatAdapter.ViewHo
     private final Context mContext;
     private final List<User> mUsers;
     private final boolean isChat;
+
     String theLastMess;
     String timeTheLastMess;
+    public static final int MSG_TYPE_LEFT = 0;
+    public static final int MSG_TYPE_RIGHT = 1;
 
     public UserChatAdapter(Context mContext, List<User> mUsers, boolean isChat) {
         this.mContext = mContext;
@@ -70,7 +73,7 @@ public class UserChatAdapter extends RecyclerView.Adapter<UserChatAdapter.ViewHo
             }
         });
         if (isChat) {
-            if (user.getStatus().equals("online")) {
+            if (user.getStatus().equals(Constant.ONLINE)) {
                 holder.status_on.setVisibility(View.VISIBLE);
                 holder.status_off.setVisibility(View.GONE);
             } else {
@@ -98,7 +101,7 @@ public class UserChatAdapter extends RecyclerView.Adapter<UserChatAdapter.ViewHo
         theLastMess = "default";
         timeTheLastMess = "0";
         final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("chats");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference(Constant.CHATS);
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -153,4 +156,3 @@ public class UserChatAdapter extends RecyclerView.Adapter<UserChatAdapter.ViewHo
         }
     }
 }
-

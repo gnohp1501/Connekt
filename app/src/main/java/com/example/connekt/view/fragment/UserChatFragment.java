@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.connekt.R;
 import com.example.connekt.adapter.UserChatAdapter;
+import com.example.connekt.constant.Constant;
 import com.example.connekt.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -72,8 +73,8 @@ public class UserChatFragment extends Fragment {
 
     private void search(String user) {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        Query query = FirebaseDatabase.getInstance().getReference("users")
-                .orderByChild("username")
+        Query query = FirebaseDatabase.getInstance().getReference(Constant.USERS)
+                .orderByChild(Constant.USER_NAME)
                 .startAt(user)
                 .endAt(user + "\uf8ff");
         query.addValueEventListener(new ValueEventListener() {
