@@ -33,6 +33,7 @@
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
     <EditText
+        android:id="@+id/search_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableStart="@drawable/ic_baseline_search_24"
@@ -42,7 +43,7 @@
         />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycle_view"
+        android:id="@+id/rv_listUser"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>

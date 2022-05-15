@@ -50,4 +50,7 @@ public class Constant {
     public static final String CHAT_LIST = "chat_list";
     public static final String STATUS = "status";
     public static final String LAST_SEEN = "last_seen";
+    public static final String ONLINE = "online";
+    public static final String NONE = "none";
+    public static final String FCM_KEY = "fcm_token";
 }

@@ -96,7 +96,7 @@ public class ChatMainActivity extends AppCompatActivity {
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        status("online");
+        status(Constant.ONLINE);
         lastSeen("0");
     }
 

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -60,12 +61,15 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
         final User user = mUsers.get(position);
         holder.btn_Follow.setVisibility(View.VISIBLE);
+        holder.layout.setVisibility(View.VISIBLE);
         holder.tv_user_name.setText(user.getUser_name());
         holder.tv_full_name.setText(user.getFull_name());
         Picasso.get().load(user.getImage_url()).placeholder(R.color.white).into(holder.iv_ava);
         isFollowed(user.getId(), holder.btn_Follow);
         if (user.getId().equals(firebaseUser.getUid())) {
             holder.btn_Follow.setVisibility(View.GONE);
+            holder.layout.setVisibility(View.GONE);
+            holder.layout.setLayoutParams(new RelativeLayout.LayoutParams(0, 0));
         }
         holder.btn_Follow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,6 +151,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         public TextView tv_user_name;
         public TextView tv_full_name;
         public Button btn_Follow;
+        public RelativeLayout layout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -155,6 +160,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             tv_user_name = itemView.findViewById(R.id.tv_user_name);
             tv_full_name = itemView.findViewById(R.id.tv_full_name);
             btn_Follow = itemView.findViewById(R.id.but_follow);
+            layout = itemView.findViewById(R.id.layout);
         }
     }
 

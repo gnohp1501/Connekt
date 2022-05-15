@@ -115,7 +115,6 @@ public class MessActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
         seenMess(userid);
@@ -234,7 +233,7 @@ public class MessActivity extends AppCompatActivity {
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        status("online");
+        status(Constant.ONLINE);
         lastSeen("0");
     }
 
