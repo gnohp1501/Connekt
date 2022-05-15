@@ -67,9 +67,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         holder.text_time.setText(getTimeAgo(Long.parseLong(chat.getTime())));
         if (position == mChats.size() - 1) {
             if (chat.isSeen()) {
-                holder.isSeen.setText(mContext.getString(R.string.seenLabel));
+                holder.isSeen.setText(mContext.getString(R.string.seenLabel) + " • ");
             } else {
-                holder.isSeen.setText(mContext.getString(R.string.deliveriedLabel));
+                holder.isSeen.setText(mContext.getString(R.string.deliveriedLabel) + " • ");
             }
         } else {
             holder.isSeen.setVisibility(View.GONE);
