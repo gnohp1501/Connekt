@@ -6,16 +6,19 @@
     android:background="@color/white"
     android:orientation="vertical"
     tools:context=".view.fragment.SearchFragment">
+
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/bar"
         android:background="?android:attr/windowBackground">
+
         <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/toolbar"
             android:background="?android:attr/windowBackground">
+
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
@@ -27,23 +30,31 @@
                     android:layout_marginStart="10dp"
                     android:gravity="center"
                     android:text="SEARCH"
-                    android:textSize="16dp"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
                     android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/background_buttonmini">
+
+                    <ImageView
+                        android:id="@+id/search_user"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:src="@drawable/ic_baseline_search_24" />
+                </LinearLayout>
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
-    <EditText
-        android:id="@+id/search_user"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableStart="@drawable/ic_baseline_search_24"
-        android:backgroundTint="@color/gradient_start"
-        android:layout_margin="14dp"
-        android:hint="Search here"
-        />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_listUser"
+        android:id="@+id/rv_listPhoto"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>

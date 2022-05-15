@@ -53,8 +53,8 @@ public class DateUtils {
         long now = currentDate().getTime();
 
         final long diff = now - time;
-        if (diff < 2 * MINUTE_MILLIS) {
-            return "A minute ago";
+        if (diff < 1 * MINUTE_MILLIS) {
+            return "a minute ago";
         } else if (diff < 50 * MINUTE_MILLIS) {
             return diff / MINUTE_MILLIS + " minutes ago";
         } else if (diff < 90 * MINUTE_MILLIS) {

@@ -169,9 +169,9 @@
                 android:layout_height="52dp"
                 android:gravity="center"
                 android:text="ALL PICTURE"
-                android:visibility="gone"
                 android:textColor="@color/black"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone" />
 
             <ImageButton
                 android:id="@+id/ibm_my_pictures"
@@ -221,11 +221,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/iv_ava"
-            android:layout_marginStart="-50dp"
-            android:layout_marginLeft="-50dp"
-            android:layout_marginTop="-50dp"
-            android:layout_marginEnd="-50dp"
-            android:layout_marginBottom="-50dp"
+            android:layout_marginStart="-35dp"
+            android:layout_marginTop="-25dp"
+            android:layout_marginEnd="-65dp"
             android:layout_toRightOf="@id/iv_ava"
             android:src="@drawable/ic_camera_button" />
     </RelativeLayout>

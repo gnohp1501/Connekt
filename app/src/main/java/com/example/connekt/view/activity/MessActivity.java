@@ -108,7 +108,7 @@ public class MessActivity extends AppCompatActivity {
                 if (user.getStatus().equals("online")) {
                     last_seen.setText("Active");
                 } else {
-                    last_seen.setText("Last seen in " + getTime(Long.parseLong(user.getLast_seen())));
+                    last_seen.setText(getTime(Long.parseLong(user.getLast_seen())));
                 }
                 readMess(firebaseUser.getUid(), userid, user.getImage_url());
             }

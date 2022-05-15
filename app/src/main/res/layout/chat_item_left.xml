@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
     android:padding="8dp">
@@ -8,7 +9,9 @@
         android:id="@+id/iv_ava"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/ic_launcher"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/text_send"
@@ -20,7 +23,9 @@
         android:padding="8dp"
         android:text="Hello"
         android:textColor="@color/black"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        app:layout_constraintLeft_toRightOf="@id/iv_ava"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/text_time"
@@ -32,7 +37,9 @@
         android:layout_marginRight="4dp"
         android:layout_toRightOf="@+id/text_seen"
         android:text="aaa"
-        android:visibility="gone" />
+        android:visibility="gone"
+        app:layout_constraintLeft_toRightOf="@id/text_seen"
+        app:layout_constraintTop_toBottomOf="@id/text_send" />
 
     <TextView
         android:id="@+id/text_seen"
@@ -41,6 +48,8 @@
         android:layout_below="@id/text_send"
         android:layout_marginLeft="10dp"
         android:text="seen"
-        android:visibility="gone" />
+        android:visibility="gone"
+        app:layout_constraintLeft_toRightOf="@id/text_seen"
+        app:layout_constraintTop_toBottomOf="@id/text_send" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
