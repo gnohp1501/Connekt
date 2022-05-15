@@ -1,5 +1,7 @@
 package com.example.connekt.constant;
 
+import java.util.HashMap;
+
 public class Constant {
     public static final String ID = "id";
     public static final String EMAIL = "email";
@@ -53,4 +55,27 @@ public class Constant {
     public static final String ONLINE = "online";
     public static final String NONE = "none";
     public static final String FCM_KEY = "fcm_token";
+
+    public static final String REMOTE_MSG_AUTHORIZATION ="Authorization";
+    public static final String REMOTE_MSG_CONTENT_TYPE ="Content-Type";
+    public static final String REMOTE_MSG_DATA = "data";
+    public static final String REMOTE_MSG_REGISTRATION_IDS = "registration_ids";
+
+    public static HashMap<String,String> remoteMsgHeaders = null;
+
+    public static HashMap<String,String> getRemoteMsgHeaders() {
+        if (remoteMsgHeaders == null) {
+            remoteMsgHeaders = new HashMap<>();
+            remoteMsgHeaders.put(
+                    REMOTE_MSG_AUTHORIZATION,
+                    "key=AAAAr1o--Q0:APA91bGpQTjBQ14NzbkYpZGufPtCTIJCOAFrhfdVOmugrwWFey9BPOzCJDkngE3OkEN1lTbE8jlC2M-M2qLIrh03TOHEx18-QevbClWkekpN_GFEkZx6jUNdesss-xDTyJWvRcXYdDN2"
+
+            );
+            remoteMsgHeaders.put(
+                    REMOTE_MSG_CONTENT_TYPE,
+                    "application/json"
+            );
+        }
+        return remoteMsgHeaders;
+    }
 }

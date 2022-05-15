@@ -91,7 +91,7 @@ public class SignUpActivity extends AppCompatActivity {
                 map.put(Constant.BOD, " ");
                 map.put(Constant.STATUS, Constant.ONLINE);
                 map.put(Constant.LAST_SEEN, System.currentTimeMillis() + "");
-                map.put(Constant.FCM_KEY,123);
+                map.put(Constant.FCM_KEY, "");
                 mRootRef.child(Constant.USERS).child(mAuth.getCurrentUser().getUid()).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

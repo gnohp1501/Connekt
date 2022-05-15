@@ -61,7 +61,6 @@ public class PersonFragment extends Fragment {
         }
         userInfo();
         getFollowersAndFollowingCount();
-        //getPostCount();
         myPhotos();
         getSavedPosts();
 
