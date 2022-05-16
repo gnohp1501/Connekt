@@ -65,12 +65,12 @@ public class PersonFragment extends Fragment {
         getSavedPosts();
 
         binding.rvPictures.setHasFixedSize(true);
-        binding.rvPictures.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        binding.rvPictures.setLayoutManager(new GridLayoutManager(getContext(), 2));
         myPhotoList = new ArrayList<>();
         photoAdapter = new PhotoAdapter(getContext(), myPhotoList);
         binding.rvPictures.setAdapter(photoAdapter);
         //
-        binding.rvSaved.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        binding.rvSaved.setLayoutManager(new GridLayoutManager(getContext(), 2));
         mySavedPosts = new ArrayList<>();
         postAdapterSaves = new PhotoAdapter(getContext(), mySavedPosts);
         binding.rvSaved.setAdapter(postAdapterSaves);

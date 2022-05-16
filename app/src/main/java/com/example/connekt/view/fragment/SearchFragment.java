@@ -41,7 +41,7 @@ public class SearchFragment extends Fragment {
         binding = FragmentSearchBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         binding.rvListPhoto.setHasFixedSize(true);
-        binding.rvListPhoto.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        binding.rvListPhoto.setLayoutManager(new GridLayoutManager(getContext(), 2));
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         photoList = new ArrayList<>();
         photoAdapter = new PhotoAdapter(getContext(), photoList);

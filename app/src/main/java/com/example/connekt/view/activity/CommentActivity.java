@@ -58,16 +58,11 @@ public class CommentActivity extends AppCompatActivity {
         });
         Intent intent = getIntent();
         postId = intent.getStringExtra(Constant.POST_ID);
-
         binding.recyclerView.setHasFixedSize(true);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         commentList = new ArrayList<>();
         commentAdapter = new CommentAdapter(this, commentList, postId);
-        //
         binding.recyclerView.setAdapter(commentAdapter);
-
-        //
-
         fUser = FirebaseAuth.getInstance().getCurrentUser();
 
         getUserImage();
