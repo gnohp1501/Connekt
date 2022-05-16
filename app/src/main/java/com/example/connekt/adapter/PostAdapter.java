@@ -21,6 +21,7 @@ import com.example.connekt.model.User;
 import com.example.connekt.view.activity.CommentActivity;
 import com.example.connekt.view.activity.ListUserActivity;
 import com.example.connekt.view.fragment.PersonFragment;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -36,7 +37,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     private final Context mContext;
     private final List<Post> mPosts;
-
+    BottomSheetDialog bottomSheetDialog;
     private final FirebaseUser firebaseUser;
 
     public PostAdapter(Context mContext, List<Post> mPosts) {
