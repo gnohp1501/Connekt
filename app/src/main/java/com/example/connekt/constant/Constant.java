@@ -56,14 +56,16 @@ public class Constant {
     public static final String NONE = "none";
     public static final String FCM_KEY = "fcm_token";
 
-    public static final String REMOTE_MSG_AUTHORIZATION ="Authorization";
-    public static final String REMOTE_MSG_CONTENT_TYPE ="Content-Type";
+    public static final String REMOTE_MSG_AUTHORIZATION = "Authorization";
+    public static final String REMOTE_MSG_CONTENT_TYPE = "Content-Type";
     public static final String REMOTE_MSG_DATA = "data";
     public static final String REMOTE_MSG_REGISTRATION_IDS = "registration_ids";
+    public static final String NO_CREATE = "no_create";
+    public static final String CREATED = "created";
 
-    public static HashMap<String,String> remoteMsgHeaders = null;
+    public static HashMap<String, String> remoteMsgHeaders = null;
 
-    public static HashMap<String,String> getRemoteMsgHeaders() {
+    public static HashMap<String, String> getRemoteMsgHeaders() {
         if (remoteMsgHeaders == null) {
             remoteMsgHeaders = new HashMap<>();
             remoteMsgHeaders.put(

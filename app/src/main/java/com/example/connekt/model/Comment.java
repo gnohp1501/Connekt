@@ -10,14 +10,25 @@ public class Comment {
     private String comment;
     @SerializedName(Constant.PUBLISHER)
     private String publisher;
+    @SerializedName(Constant.TIME_CREATED)
+    private String time_created;
 
     public Comment() {
     }
 
-    public Comment(String id, String comment, String publisher) {
+    public Comment(String id, String comment, String publisher, String time_created) {
         this.id = id;
         this.comment = comment;
         this.publisher = publisher;
+        this.time_created = time_created;
+    }
+
+    public String getTime_created() {
+        return time_created;
+    }
+
+    public void setTime_created(String time_created) {
+        this.time_created = time_created;
     }
 
     public String getId() {

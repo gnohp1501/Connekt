@@ -79,10 +79,11 @@
             android:layout_alignParentBottom="true"
             android:layout_marginStart="0dp"
             android:layout_marginBottom="8dp"
+            android:layout_marginLeft="50dp"
             android:background="@drawable/background_edittext"
             android:lineHeight="300dp"
             android:paddingLeft="15dp"
-            android:paddingRight="50dp" />
+            />
 
         <ImageView
             android:id="@+id/button_send"

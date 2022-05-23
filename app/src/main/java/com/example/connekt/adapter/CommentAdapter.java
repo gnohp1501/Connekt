@@ -1,5 +1,7 @@
 package com.example.connekt.adapter;
 
+import static com.example.connekt.utils.DateUtils.getTimeAgo;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -58,6 +60,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         fUser = FirebaseAuth.getInstance().getCurrentUser();
         Comment comment = mComments.get(position);
         holder.comment.setText(comment.getComment());
+        holder.time_created.setText(getTimeAgo(Long.parseLong(comment.getTime_created())));
 
         FirebaseDatabase.getInstance().getReference().child(Constant.USERS)
                 .child(comment.getPublisher()).addValueEventListener(new ValueEventListener() {
@@ -85,8 +88,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                 Intent intent = new Intent(mContext, MainActivity.class);
                 intent.putExtra(Constant.PUBLISHER_ID, comment.getPublisher());
                 mContext.startActivity(intent);
-
-
             }
         });
         holder.imageProfile.setOnClickListener(new View.OnClickListener() {
@@ -127,7 +128,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                         }
                     });
                     alertDialog.show();
-
                 }
                 return true;
             }
@@ -143,6 +143,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         public CircleImageView imageProfile;
         public TextView username;
         public TextView comment;
+        public TextView time_created;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -151,6 +152,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             imageProfile = itemView.findViewById(R.id.image_profile);
             username = itemView.findViewById(R.id.username);
             comment = itemView.findViewById(R.id.comment);
+            time_created = itemView.findViewById(R.id.tv_time_created);
 
         }
     }

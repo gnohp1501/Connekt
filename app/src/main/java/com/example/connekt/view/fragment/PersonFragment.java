@@ -97,7 +97,11 @@ public class PersonFragment extends Fragment {
         binding.ivEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), EditProfileActivity.class));
+                Intent i = new Intent(getContext(), EditProfileActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putBoolean(Constant.CREATED, true);
+                i.putExtras(bundle);
+                startActivity(i);
             }
         });
         binding.butEdit.setOnClickListener(new View.OnClickListener() {
