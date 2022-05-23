@@ -8,11 +8,14 @@
         android:id="@+id/image_profile"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:layout_centerVertical="true"
         android:src="@mipmap/ic_launcher" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/info"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:layout_marginStart="5dp"
         android:layout_toEndOf="@id/image_profile"
         android:orientation="vertical">
@@ -23,6 +26,7 @@
             android:layout_height="wrap_content"
             android:text="Username"
             android:textColor="@color/black"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
@@ -30,9 +34,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxLines="5"
+            android:textSize="14sp"
             android:text="This a comment"
             android:textColor="@color/black" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_time_created"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/info"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@id/image_profile"
+        android:textSize="12sp"
+        android:text="Just now" />
 
 </RelativeLayout>

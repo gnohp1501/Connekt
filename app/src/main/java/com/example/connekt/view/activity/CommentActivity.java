@@ -8,7 +8,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.connekt.R;
@@ -45,17 +44,7 @@ public class CommentActivity extends AppCompatActivity {
         binding = ActivityCommentBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(Constant.COMMENTS);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
         Intent intent = getIntent();
         postId = intent.getStringExtra(Constant.POST_ID);
         binding.recyclerView.setHasFixedSize(true);
@@ -76,21 +65,24 @@ public class CommentActivity extends AppCompatActivity {
                 }
             }
         });
+        binding.ivClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         getComment();
     }
 
     private void getComment() {
-
         FirebaseDatabase.getInstance().getReference().child(Constant.COMMENTS).child(postId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 commentList.clear();
-
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Comment comment = snapshot.getValue(Comment.class);
                     commentList.add(comment);
                 }
-
                 commentAdapter.notifyDataSetChanged();
             }
 
@@ -109,13 +101,13 @@ public class CommentActivity extends AppCompatActivity {
         map.put(Constant.ID, id);
         map.put(Constant.COMMENT, binding.addComment.getText().toString());
         map.put(Constant.PUBLISHER, fUser.getUid());
+        map.put(Constant.TIME_CREATED, System.currentTimeMillis() + "");
 
         binding.addComment.setText("");
         ref.child(id).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(CommentActivity.this, "Comment added", Toast.LENGTH_SHORT).show();
 
                 } else {
                     Toast.makeText(CommentActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();

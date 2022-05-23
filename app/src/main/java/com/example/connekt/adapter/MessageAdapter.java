@@ -51,9 +51,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             View view = LayoutInflater.from(mContext).inflate(R.layout.chat_item_left, parent, false);
             return new ViewHolder(view);
         }
-
     }
-
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
@@ -69,7 +67,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             if (chat.isSeen()) {
                 holder.isSeen.setText(mContext.getString(R.string.seenLabel) + " • ");
             } else {
-                holder.isSeen.setText(mContext.getString(R.string.deliveriedLabel) + " • ");
+                holder.isSeen.setText(mContext.getString(R.string.deliveredLabel) + " • ");
             }
         } else {
             holder.isSeen.setVisibility(View.GONE);

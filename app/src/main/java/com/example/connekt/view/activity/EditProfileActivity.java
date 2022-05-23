@@ -32,7 +32,6 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 
 public class EditProfileActivity extends AppCompatActivity {
-    private final int PICK_IMAGE_REQUEST = 22;
     private final int REQUEST_CODE = 1;
     private final int REQUEST_OKE = -1;
     FirebaseStorage storage;
@@ -40,7 +39,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private FirebaseUser fUser;
     private ActivityEditProfileBinding binding;
     private Uri filePathUri;
-    private String imageUrl;
+    ProgressDialog pd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +47,25 @@ public class EditProfileActivity extends AppCompatActivity {
         binding = ActivityEditProfileBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        pd = new ProgressDialog(this);
         fUser = FirebaseAuth.getInstance().getCurrentUser();
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-        userInfo();
+        Bundle intent = getIntent().getExtras();
+        if (intent.getBoolean(Constant.CREATED)) {
+            userInfo();
+        } else {
+            binding.tvSave.setText("Create");
+            binding.ivClose.setVisibility(View.GONE);
+            binding.tvTitle.setText("Create New Profile");
+            binding.tvChangePhoto.setText("Upload your avatar");
+        }
+        binding.ivClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         binding.tvChangePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,7 +95,6 @@ public class EditProfileActivity extends AppCompatActivity {
         FirebaseDatabase.getInstance().getReference().child(Constant.USERS)
                 .child(fUser.getUid()).updateChildren(map);
         uploadImage();
-        finish();
     }
 
     @Override
@@ -97,7 +110,6 @@ public class EditProfileActivity extends AppCompatActivity {
         final ProgressDialog pd = new ProgressDialog(this);
         pd.setMessage("Uploading");
         pd.show();
-
         if (filePathUri != null) {
             final StorageReference filePath = FirebaseStorage.getInstance().getReference(Constant.POSTS).child(System.currentTimeMillis() + "." + getFileExtension(filePathUri));
             StorageTask uploadTask = filePath.putFile(filePathUri);
@@ -116,8 +128,12 @@ public class EditProfileActivity extends AppCompatActivity {
                         Uri downloadUri = task.getResult();
                         String url = downloadUri.toString();
                         FirebaseDatabase.getInstance().getReference().child(Constant.USERS).child(fUser.getUid()).child("image_url").setValue(url);
+                        if (getIntent().getExtras().getBoolean(Constant.CREATED)) {
+                            finish();
+                        } else {
+                            startActivity(new Intent(EditProfileActivity.this, MainActivity.class));
+                        }
                         pd.dismiss();
-                        Toast.makeText(EditProfileActivity.this, "DONE!!!", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(EditProfileActivity.this, "Upload failed!", Toast.LENGTH_SHORT).show();
                     }

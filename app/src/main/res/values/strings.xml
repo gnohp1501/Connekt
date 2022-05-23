@@ -13,5 +13,6 @@
     <string name="deleteCommentSuccessLabel">comment deleted</string>
     <string name="likedYourPostLabel">Liked your post</string>
     <string name="seenLabel">seen</string>
-    <string name="deliveriedLabel">Deliveried</string>
+    <string name="deliveredLabel">Delivered</string>
+    <string name="sign_in_with_google">Sign in with GOOGLE</string>
 </resources>

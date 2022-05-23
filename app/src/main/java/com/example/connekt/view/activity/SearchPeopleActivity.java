@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.connekt.R;
 import com.example.connekt.adapter.UserAdapter;
 import com.example.connekt.constant.Constant;
 import com.example.connekt.databinding.ActivitySearchPeopleBinding;
