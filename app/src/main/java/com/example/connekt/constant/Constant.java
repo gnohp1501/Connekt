@@ -80,4 +80,5 @@ public class Constant {
         }
         return remoteMsgHeaders;
     }
+    public static final String EDIT = "edit";
 }

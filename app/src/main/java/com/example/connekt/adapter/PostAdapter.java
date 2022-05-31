@@ -4,6 +4,7 @@ import static com.example.connekt.utils.DateUtils.getTimeAgo;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +19,11 @@ import com.example.connekt.R;
 import com.example.connekt.constant.Constant;
 import com.example.connekt.model.Post;
 import com.example.connekt.model.User;
+import com.example.connekt.view.activity.AddActivity;
 import com.example.connekt.view.activity.CommentActivity;
 import com.example.connekt.view.activity.ListUserActivity;
 import com.example.connekt.view.fragment.PersonFragment;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -37,6 +40,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     private final Context mContext;
     private final List<Post> mPosts;
     private final FirebaseUser firebaseUser;
+    BottomSheetDialog bottomSheetDialog;
 
     public PostAdapter(Context mContext, List<Post> mPosts) {
         this.mContext = mContext;
@@ -59,6 +63,35 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         holder.tv_time_created.setText(post.getTime_created());
         holder.tv_time_created.setText(getTimeAgo(Long.parseLong(post.getTime_created())));
         holder.iv_image.requestLayout();
+        checkAuthor(post.getPublisher(),holder.iv_more);
+        holder.iv_more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomSheetDialog = new BottomSheetDialog(mContext, R.style.BottomSheetTheme);
+
+                View bsView = LayoutInflater.from(mContext).inflate(R.layout.bottom_sheet_post,
+                        view.findViewById(R.id.bottom_sheet));
+                bsView.findViewById(R.id.bs_edit).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(mContext, AddActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString(Constant.POST_ID,post.getPost_id());
+                        bundle.putBoolean(Constant.EDIT,true);
+                        intent.putExtras(bundle);
+                        mContext.startActivity(intent);
+                    }
+                });
+                bsView.findViewById(R.id.bs_delete).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
+                bottomSheetDialog.setContentView(bsView);
+                bottomSheetDialog.show();
+            }
+        });
 
         FirebaseDatabase.getInstance().getReference().child(Constant.USERS).child(post.getPublisher()).addValueEventListener(new ValueEventListener() {
             @Override
@@ -245,6 +278,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
             }
         });
+    }
+
+    private void checkAuthor(String userId, final ImageView iv_more) {
+        if (userId == FirebaseAuth.getInstance().getCurrentUser().getUid()) {
+            iv_more.setVisibility(View.GONE);
+        } else {
+            iv_more.setVisibility(View.VISIBLE);
+        }
     }
 
     private void addNotification(String postId, String publisherId) {
