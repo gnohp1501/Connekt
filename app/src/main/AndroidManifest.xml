@@ -16,9 +16,6 @@
             android:name=".view.activity.AddActivity"
             android:exported="false" />
         <activity
-            android:name=".view.activity.SearchPeopleActivity"
-            android:exported="false" />
-        <activity
             android:name=".view.activity.MessActivity"
             android:exported="false" />
         <activity

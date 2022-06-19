@@ -39,6 +39,14 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        init();
+        checkFollowingUsers();
+        userInfo();
+        message();
+        return view;
+    }
+
+    private void init() {
         binding.rvPost.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setStackFromEnd(true);
@@ -48,16 +56,6 @@ public class HomeFragment extends Fragment {
         postAdapter = new PostAdapter(getContext(), postList);
         binding.rvPost.setAdapter(postAdapter);
         followingList = new ArrayList<>();
-        binding.message.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ChatMainActivity.class);
-                getActivity().startActivity(intent);
-            }
-        });
-        checkFollowingUsers();
-        userInfo();
-        return view;
     }
 
     private void userInfo() {
@@ -66,12 +64,22 @@ public class HomeFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                binding.tvUserName.setText(user.getUser_name());
+                //binding.tvUserName.setText(user.getUser_name());
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+    }
+
+    private void message() {
+        binding.message.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ChatMainActivity.class);
+                getActivity().startActivity(intent);
             }
         });
     }

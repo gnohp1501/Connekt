@@ -66,13 +66,7 @@ public class MessActivity extends AppCompatActivity {
         init();
         setFirebaseUser();
         setButton_send();
-        iv_close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MessActivity.this, ChatMainActivity.class);
-                startActivity(intent);
-            }
-        });
+        close();
     }
 
     public void init() {
@@ -87,6 +81,16 @@ public class MessActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setStackFromEnd(true);
         recyclerview_mess.setLayoutManager(linearLayoutManager);
+    }
+
+    private void close() {
+        iv_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MessActivity.this, ChatMainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public void setFirebaseUser() {

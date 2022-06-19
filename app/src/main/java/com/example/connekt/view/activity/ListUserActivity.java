@@ -35,29 +35,8 @@ public class ListUserActivity extends AppCompatActivity {
         binding = ActivityListUserBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
-        Intent intent = getIntent();
-        id = intent.getStringExtra(Constant.ID);
-        title = intent.getStringExtra(Constant.TITLE);
-
-        setSupportActionBar(binding.toolbar);
-        getSupportActionBar().setTitle(title);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        binding.rvListUser.setHasFixedSize(true);
-        binding.rvListUser.setLayoutManager(new LinearLayoutManager(this));
-        mUsers = new ArrayList<>();
-        userAdapter = new UserAdapter(this, mUsers, false);
-        binding.rvListUser.setAdapter(userAdapter);
-
-        idList = new ArrayList<>();
-
+        init();
+        close();
         switch (title) {
             case Constant.FOLLOWERS:
                 getFollowers();
@@ -71,8 +50,31 @@ public class ListUserActivity extends AppCompatActivity {
         }
     }
 
-    private void getFollowers() {
+    private void init() {
+        Intent intent = getIntent();
+        id = intent.getStringExtra(Constant.ID);
+        title = intent.getStringExtra(Constant.TITLE);
+        setSupportActionBar(binding.toolbar);
+        getSupportActionBar().setTitle(title);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        binding.rvListUser.setHasFixedSize(true);
+        binding.rvListUser.setLayoutManager(new LinearLayoutManager(this));
+        mUsers = new ArrayList<>();
+        userAdapter = new UserAdapter(this, mUsers, false);
+        binding.rvListUser.setAdapter(userAdapter);
+        idList = new ArrayList<>();
+    }
 
+    private void close() {
+        binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    private void getFollowers() {
         FirebaseDatabase.getInstance().getReference().child(Constant.FOLLOW).child(id).child(Constant.FOLLOWERS).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -80,7 +82,6 @@ public class ListUserActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     idList.add((snapshot.getKey()));
                 }
-
                 showUsers();
             }
 
@@ -93,7 +94,6 @@ public class ListUserActivity extends AppCompatActivity {
     }
 
     private void getFollowings() {
-
         FirebaseDatabase.getInstance().getReference().child(Constant.FOLLOW).child(id).child(Constant.FOLLOWING).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -129,12 +129,9 @@ public class ListUserActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
 
     private void showUsers() {
-
         FirebaseDatabase.getInstance().getReference().child(Constant.USERS).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -156,6 +153,5 @@ public class ListUserActivity extends AppCompatActivity {
 
             }
         });
-
     }
 }

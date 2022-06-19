@@ -36,20 +36,21 @@ public class FavoriteFragment extends Fragment {
         binding = FragmentFavoriteBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-
-        binding.rvNotification.setHasFixedSize(true);
-        binding.rvNotification.setLayoutManager(new LinearLayoutManager(getContext()));
-        notificationList = new ArrayList<>();
-        notificationAdapter = new NotificationsAdapter(getContext(), notificationList);
-        binding.rvNotification.setAdapter(notificationAdapter);
-
+        init();
         readNotifications();
 
         return view;
     }
 
-    private void readNotifications() {
+    private void init() {
+        binding.rvNotification.setHasFixedSize(true);
+        binding.rvNotification.setLayoutManager(new LinearLayoutManager(getContext()));
+        notificationList = new ArrayList<>();
+        notificationAdapter = new NotificationsAdapter(getContext(), notificationList);
+        binding.rvNotification.setAdapter(notificationAdapter);
+    }
 
+    private void readNotifications() {
         FirebaseDatabase.getInstance().getReference().child(Constant.NOTIFICATIONS).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

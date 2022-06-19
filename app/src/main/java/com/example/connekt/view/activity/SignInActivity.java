@@ -2,6 +2,7 @@ package com.example.connekt.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -76,6 +77,12 @@ public class SignInActivity extends AppCompatActivity {
                 signIn();
             }
         });
+//        binding.tvSignup.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(SignInActivity.this,SignUpActivity.class));
+//            }
+//        });
     }
 
     /**
