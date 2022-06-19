@@ -1,5 +1,6 @@
 package com.example.connekt.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -9,7 +10,6 @@ import androidx.fragment.app.Fragment;
 
 import com.example.connekt.R;
 import com.example.connekt.constant.Constant;
-import com.example.connekt.view.fragment.AddFragment;
 import com.example.connekt.view.fragment.FavoriteFragment;
 import com.example.connekt.view.fragment.HomeFragment;
 import com.example.connekt.view.fragment.PersonFragment;
@@ -47,7 +47,12 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case R.id.nav_add:
-                        selectorFragment = new AddFragment();
+                        selectorFragment = null;
+                        Intent intent = new Intent(MainActivity.this, AddActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putBoolean(Constant.EDIT, false);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
                         break;
 
                     case R.id.nav_heart:
@@ -76,32 +81,4 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
         }
     }
-
-//    private void status(String status) {
-//        databaseReference = FirebaseDatabase.getInstance().getReference(Constant.USERS).child(firebaseUser.getUid());
-//        HashMap<String, Object> hashMap = new HashMap<>();
-//        hashMap.put(Constant.STATUS, status);
-//        databaseReference.updateChildren(hashMap);
-//    }
-//
-//    private void lastSeen(String last_seen) {
-//        databaseReference = FirebaseDatabase.getInstance().getReference(Constant.USERS).child(firebaseUser.getUid());
-//        HashMap<String, Object> hashMap = new HashMap<>();
-//        hashMap.put(Constant.LAST_SEEN, last_seen);
-//        databaseReference.updateChildren(hashMap);
-//    }
-//
-//    @Override
-//    protected void onPostResume() {
-//        super.onPostResume();
-//        status(Constant.ONLINE);
-//        lastSeen("0");
-//    }
-//
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        status("offline");
-//        lastSeen(System.currentTimeMillis() + "");
-//    }
 }

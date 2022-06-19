@@ -45,6 +45,14 @@ public class CommentActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+        init();
+        getUserImage();
+        inputComment();
+        getComment();
+        close();
+    }
+
+    private void init() {
         Intent intent = getIntent();
         postId = intent.getStringExtra(Constant.POST_ID);
         binding.recyclerView.setHasFixedSize(true);
@@ -53,25 +61,6 @@ public class CommentActivity extends AppCompatActivity {
         commentAdapter = new CommentAdapter(this, commentList, postId);
         binding.recyclerView.setAdapter(commentAdapter);
         fUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        getUserImage();
-        binding.post.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (TextUtils.isEmpty(binding.addComment.getText().toString())) {
-                    Toast.makeText(CommentActivity.this, "No comment added", Toast.LENGTH_SHORT).show();
-                } else {
-                    putComment();
-                }
-            }
-        });
-        binding.ivClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-        getComment();
     }
 
     private void getComment() {
@@ -92,6 +81,28 @@ public class CommentActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void inputComment() {
+        binding.post.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TextUtils.isEmpty(binding.addComment.getText().toString())) {
+                    Toast.makeText(CommentActivity.this, "Comment is empty", Toast.LENGTH_SHORT).show();
+                } else {
+                    putComment();
+                }
+            }
+        });
+    }
+
+    private void close() {
+        binding.ivClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     private void putComment() {

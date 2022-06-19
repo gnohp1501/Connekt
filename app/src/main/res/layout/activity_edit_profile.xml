@@ -106,9 +106,28 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@drawable/edittext_background"
+            android:hint="Date of birth"
+            android:padding="10dp"
+            android:textColor="@color/black" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/edittext_background"
+            android:hint="Phone"
+            android:padding="10dp"
+            android:textColor="@color/black" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/edittext_background"
             android:hint="Bio"
             android:padding="10dp"
             android:textColor="@color/black" />
+
+
     </LinearLayout>
 
 </LinearLayout>

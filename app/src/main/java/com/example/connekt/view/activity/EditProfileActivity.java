@@ -47,6 +47,13 @@ public class EditProfileActivity extends AppCompatActivity {
         binding = ActivityEditProfileBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        init();
+        changePhoto();
+        save();
+        close();
+    }
+
+    private void init() {
         pd = new ProgressDialog(this);
         fUser = FirebaseAuth.getInstance().getCurrentUser();
         storage = FirebaseStorage.getInstance();
@@ -60,18 +67,27 @@ public class EditProfileActivity extends AppCompatActivity {
             binding.tvTitle.setText("Create New Profile");
             binding.tvChangePhoto.setText("Upload your avatar");
         }
+    }
+
+    private void close() {
         binding.ivClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
+    }
+
+    private void changePhoto() {
         binding.tvChangePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 chooseImage();
             }
         });
+    }
+
+    private void save() {
         binding.tvSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

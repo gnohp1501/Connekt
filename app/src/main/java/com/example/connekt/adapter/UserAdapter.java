@@ -1,7 +1,6 @@
 package com.example.connekt.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.connekt.R;
 import com.example.connekt.constant.Constant;
 import com.example.connekt.model.User;
-import com.example.connekt.view.activity.MainActivity;
 import com.example.connekt.view.fragment.PersonFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -56,9 +54,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
         final User user = mUsers.get(position);
         holder.btn_Follow.setVisibility(View.VISIBLE);
         holder.layout.setVisibility(View.VISIBLE);
@@ -66,11 +62,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         holder.tv_full_name.setText(user.getFull_name());
         Picasso.get().load(user.getImage_url()).placeholder(R.color.white).into(holder.iv_ava);
         isFollowed(user.getId(), holder.btn_Follow);
+
         if (user.getId().equals(firebaseUser.getUid())) {
             holder.btn_Follow.setVisibility(View.GONE);
             holder.layout.setVisibility(View.GONE);
             holder.layout.setLayoutParams(new RelativeLayout.LayoutParams(0, 0));
         }
+
         holder.btn_Follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,14 +93,11 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isFragment) {
-                    mContext.getSharedPreferences(Constant.PROFILE, Context.MODE_PRIVATE).edit().putString(Constant.PROFILE_ID, user.getId()).apply();
-                    ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PersonFragment()).commit();
-                } else {
-                    Intent intent = new Intent(mContext, MainActivity.class);
-                    intent.putExtra(Constant.PUBLISHER_ID, user.getId());
-                    mContext.startActivity(intent);
-                }
+                mContext.getSharedPreferences(Constant.PROFILE, Context.MODE_PRIVATE)
+                        .edit().putString(Constant.PROFILE_ID, user.getId()).apply();
+
+                ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new PersonFragment()).commit();
             }
         });
 

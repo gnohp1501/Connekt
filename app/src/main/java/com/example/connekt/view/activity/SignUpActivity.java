@@ -39,11 +39,15 @@ public class SignUpActivity extends AppCompatActivity {
         binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        init();
+        goSignIn();
+        createAccount();
+    }
+
+    private void init() {
         mAuth = FirebaseAuth.getInstance();
         mRootRef = FirebaseDatabase.getInstance().getReference();
         pd = new ProgressDialog(this);
-        goSignIn();
-        createAccount();
     }
 
     private void createAccount() {

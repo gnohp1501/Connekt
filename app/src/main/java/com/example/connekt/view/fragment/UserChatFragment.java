@@ -41,15 +41,19 @@ public class UserChatFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user, container, false);
+        //
+        init(view);
+        searchUser();
+        readUsers();
+        return view;
+    }
+
+    private void init(View view) {
         recyclerViewUser = view.findViewById(R.id.recycleview_user);
         recyclerViewUser.setHasFixedSize(true);
         recyclerViewUser.setLayoutManager(new LinearLayoutManager(getContext()));
         mUsers = new ArrayList<>();
         search_user = view.findViewById(R.id.search_user);
-        //
-        searchUser();
-        readUsers();
-        return view;
     }
 
     private void searchUser() {

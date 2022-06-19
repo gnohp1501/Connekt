@@ -9,6 +9,7 @@
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/drawable-v24/bg_left.xml" value="0.1" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/drawable-v24/bg_right.xml" value="0.259" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/drawable-v24/ic_google.xml" value="0.228" />
+        <entry key="..\:/ProjectTT/Connekt/app/src/main/res/drawable/background_bottom_sheet.xml" value="0.15" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/drawable/background_buttonmini.xml" value="0.2135" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/drawable/background_chat.xml" value="0.259" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/drawable/background_edittext.xml" value="0.259" />
@@ -26,8 +27,11 @@
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/drawable/ic_baseline_bookmark_24.xml" value="0.1555" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/drawable/ic_baseline_bookmark_border_24.xml" value="0.1555" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/drawable/ic_baseline_chat_bubble_outline_24.xml" value="0.1555" />
+        <entry key="..\:/ProjectTT/Connekt/app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.1825" />
+        <entry key="..\:/ProjectTT/Connekt/app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.1825" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/drawable/ic_baseline_favorite_24.xml" value="0.1555" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/drawable/ic_baseline_favorite_border_24.xml" value="0.1555" />
+        <entry key="..\:/ProjectTT/Connekt/app/src/main/res/drawable/ic_baseline_keyboard_tab_24.xml" value="0.177" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/drawable/ic_baseline_more_vert_24.xml" value="0.1555" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.2135" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/drawable/ic_camera_button.xml" value="0.259" />
@@ -65,6 +69,7 @@
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/drawable/ic_wave__1_.xml" value="0.1935" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/drawable/icon_like.xml" value="0.169" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/font/helvetica.xml" value="0.37447916666666664" />
+        <entry key="..\:/ProjectTT/Connekt/app/src/main/res/layout/activity_add.xml" value="0.15433946130825138" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/layout/activity_chat_main.xml" value="0.25" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/layout/activity_comment.xml" value="0.22" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/layout/activity_create_account.xml" value="0.18541666666666667" />
@@ -72,22 +77,24 @@
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/layout/activity_list_user.xml" value="0.2975630611372381" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/layout/activity_mess.xml" value="0.25" />
-        <entry key="..\:/ProjectTT/Connekt/app/src/main/res/layout/activity_search_people.xml" value="0.40925925925925927" />
+        <entry key="..\:/ProjectTT/Connekt/app/src/main/res/layout/activity_search_people.xml" value="0.176" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/layout/activity_sign_in.xml" value="0.22" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/layout/activity_sign_up.xml" value="0.14" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/layout/activity_splash.xml" value="0.18541666666666667" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/layout/activity_view_photo.xml" value="0.2975630611372381" />
+        <entry key="..\:/ProjectTT/Connekt/app/src/main/res/layout/bottom_sheet_post.xml" value="0.33" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/layout/bottomsheet_comment.xml" value="0.1" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/layout/chat_item_left.xml" value="0.23596454200084424" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/layout/chat_item_right.xml" value="0.2975630611372381" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/layout/chat_right_item.xml" value="0.1" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/layout/comment_bottom_sheet.xml" value="0.1" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/layout/comment_item.xml" value="0.2975630611372381" />
+        <entry key="..\:/ProjectTT/Connekt/app/src/main/res/layout/dialog_post.xml" value="0.264" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/layout/fragment_add.xml" value="0.25" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/layout/fragment_chat.xml" value="0.25" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/layout/fragment_favorite.xml" value="0.15633423180592992" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/layout/fragment_home.xml" value="0.33" />
-        <entry key="..\:/ProjectTT/Connekt/app/src/main/res/layout/fragment_person.xml" value="0.25" />
+        <entry key="..\:/ProjectTT/Connekt/app/src/main/res/layout/fragment_person.xml" value="0.2" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/layout/fragment_search.xml" value="0.264" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/layout/fragment_user.xml" value="0.22" />
         <entry key="..\:/ProjectTT/Connekt/app/src/main/res/layout/header_text.xml" value="1.2714285714285714" />

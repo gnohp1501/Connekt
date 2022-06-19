@@ -50,11 +50,19 @@
         android:layout_height="wrap_content"
         android:layout_margin="14dp"
         android:backgroundTint="@color/blue_3"
-        android:hint="Search here" />
+        android:hint="Search here"
+        android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_ListUser"
         android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="match_parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_listPhoto"
+        android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_height="match_parent" />
 
 </LinearLayout>

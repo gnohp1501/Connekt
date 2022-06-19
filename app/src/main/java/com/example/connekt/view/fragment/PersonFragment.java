@@ -1,5 +1,7 @@
 package com.example.connekt.view.fragment;
 
+import static com.example.connekt.utils.DateUtils.formatNumber;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +19,7 @@ import com.example.connekt.databinding.FragmentPersonBinding;
 import com.example.connekt.model.Post;
 import com.example.connekt.model.User;
 import com.example.connekt.view.activity.EditProfileActivity;
+import com.example.connekt.view.activity.SignInActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -48,7 +51,21 @@ public class PersonFragment extends Fragment {
         binding = FragmentPersonBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         fUser = FirebaseAuth.getInstance().getCurrentUser();
+        getType();
+        userInfo();
+        getFollowersAndFollowingCount();
+        myPhotos();
+        getSavedPosts();
+        setRecyclerView();
+        showMyPhoto();
+        showSavePhoto();
+        setEdit();
+        setFollow();
+        logout();
+        return view;
+    }
 
+    private void getType() {
         String data = getContext().getSharedPreferences(Constant.PROFILE, Context.MODE_PRIVATE).getString(Constant.PROFILE_ID, Constant.NONE);
         if (data.equals(Constant.NONE)) {
             profileId = fUser.getUid();
@@ -59,21 +76,40 @@ public class PersonFragment extends Fragment {
             binding.tvTextAlbum.setVisibility(View.VISIBLE);
             getContext().getSharedPreferences(Constant.PROFILE, Context.MODE_PRIVATE).edit().clear().apply();
         }
-        userInfo();
-        getFollowersAndFollowingCount();
-        myPhotos();
-        getSavedPosts();
+        if (profileId.equals(fUser.getUid())) {
+            binding.butEdit.setVisibility(View.GONE);
+            binding.butLogout.setVisibility(View.VISIBLE);
+        } else {
+            binding.ivEdit.setVisibility(View.GONE);
+            binding.butLogout.setVisibility(View.GONE);
+            checkFollowingStatus();
+        }
+    }
 
+    private void logout() {
+        binding.butLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().signOut();
+
+                startActivity(new Intent(getContext(), SignInActivity.class));
+            }
+        });
+    }
+
+    private void setRecyclerView() {
         binding.rvPictures.setHasFixedSize(true);
         binding.rvPictures.setLayoutManager(new GridLayoutManager(getContext(), 2));
         myPhotoList = new ArrayList<>();
         photoAdapter = new PhotoAdapter(getContext(), myPhotoList);
         binding.rvPictures.setAdapter(photoAdapter);
-        //
         binding.rvSaved.setLayoutManager(new GridLayoutManager(getContext(), 2));
         mySavedPosts = new ArrayList<>();
         postAdapterSaves = new PhotoAdapter(getContext(), mySavedPosts);
         binding.rvSaved.setAdapter(postAdapterSaves);
+    }
+
+    private void showMyPhoto() {
         binding.ibmMyPictures.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,12 +117,9 @@ public class PersonFragment extends Fragment {
                 binding.rvSaved.setVisibility(View.GONE);
             }
         });
-        if (profileId.equals(fUser.getUid())) {
-            binding.butEdit.setVisibility(View.GONE);
-        } else {
-            binding.ivEdit.setVisibility(View.GONE);
-            checkFollowingStatus();
-        }
+    }
+
+    private void showSavePhoto() {
         binding.ibmSavedPictures.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,6 +127,9 @@ public class PersonFragment extends Fragment {
                 binding.rvSaved.setVisibility(View.VISIBLE);
             }
         });
+    }
+
+    private void setEdit() {
         binding.ivEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,6 +140,9 @@ public class PersonFragment extends Fragment {
                 startActivity(i);
             }
         });
+    }
+
+    private void setFollow() {
         binding.butEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,7 +160,6 @@ public class PersonFragment extends Fragment {
                 }
             }
         });
-        return view;
     }
 
     private void checkFollowingStatus() {
@@ -154,7 +192,6 @@ public class PersonFragment extends Fragment {
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     savedIds.add(snapshot.getKey());
-
                 }
                 FirebaseDatabase.getInstance().getReference().child(Constant.POSTS)
                         .addValueEventListener(new ValueEventListener() {
@@ -216,7 +253,7 @@ public class PersonFragment extends Fragment {
         ref.child(Constant.FOLLOWERS).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                binding.tvFollowers.setText("" + dataSnapshot.getChildrenCount());
+                binding.tvFollowers.setText(formatNumber(dataSnapshot.getChildrenCount()));
             }
 
             @Override
@@ -227,7 +264,7 @@ public class PersonFragment extends Fragment {
         ref.child(Constant.FOLLOWING).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                binding.tvFollowing.setText("" + dataSnapshot.getChildrenCount());
+                binding.tvFollowing.setText(formatNumber(dataSnapshot.getChildrenCount()));
             }
 
             @Override
