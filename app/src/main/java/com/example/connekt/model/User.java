@@ -1,5 +1,8 @@
 package com.example.connekt.model;
 
+import com.example.connekt.constant.Constant;
+import com.google.gson.annotations.SerializedName;
+
 public class User {
     private String id;
     private String full_name;
@@ -8,14 +11,15 @@ public class User {
     private String bio;
     private String image_url;
     private String phone_number;
-    private String dob;
+    @SerializedName(Constant.BOD)
+    private String BOD;
     private String status;
     private String last_seen;
 
     public User() {
     }
 
-    public User(String id, String full_name, String email, String user_name, String bio, String image_url, String phone_number, String dob, String status, String last_seen) {
+    public User(String id, String full_name, String email, String user_name, String bio, String image_url, String phone_number, String BOD, String status, String last_seen) {
         this.id = id;
         this.full_name = full_name;
         this.email = email;
@@ -23,12 +27,12 @@ public class User {
         this.bio = bio;
         this.image_url = image_url;
         this.phone_number = phone_number;
-        this.dob = dob;
+        this.BOD = BOD;
         this.status = status;
         this.last_seen = last_seen;
     }
 
-    public User(String id, String full_name, String email, String username, String bio, String image_url, String phone_number, String dob) {
+    public User(String id, String full_name, String email, String username, String bio, String image_url, String phone_number, String BOD) {
         this.id = id;
         this.full_name = full_name;
         this.email = email;
@@ -36,7 +40,7 @@ public class User {
         this.bio = bio;
         this.image_url = image_url;
         this.phone_number = phone_number;
-        this.dob = dob;
+        this.BOD = BOD;
     }
 
     public String getLast_seen() {
@@ -111,11 +115,27 @@ public class User {
         this.phone_number = phone_number;
     }
 
-    public String getDob() {
-        return dob;
+    public String getBOD() {
+        return BOD;
     }
 
-    public void setDob(String dob) {
-        this.dob = dob;
+    public void setBOD(String BOD) {
+        this.BOD = BOD;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", full_name='" + full_name + '\'' +
+                ", email='" + email + '\'' +
+                ", user_name='" + user_name + '\'' +
+                ", bio='" + bio + '\'' +
+                ", image_url='" + image_url + '\'' +
+                ", phone_number='" + phone_number + '\'' +
+                ", BOD='" + BOD + '\'' +
+                ", status='" + status + '\'' +
+                ", last_seen='" + last_seen + '\'' +
+                '}';
     }
 }

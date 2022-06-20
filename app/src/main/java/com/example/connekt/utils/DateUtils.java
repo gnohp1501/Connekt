@@ -18,6 +18,14 @@ public class DateUtils {
         return calendar.getTime();
     }
 
+    public static String longToDate(long time) {
+        Date date = new Date(time);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/YYYY");
+        String format = formatter.format(date);
+        return format;
+    }
+
+
     public static String getTimeAgo(long time) {
         if (time < 1000000000000L) {
             time *= 1000;

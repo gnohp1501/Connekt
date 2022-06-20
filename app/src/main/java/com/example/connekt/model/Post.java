@@ -26,6 +26,17 @@ public class Post {
         this.time_created = time_created;
     }
 
+    @Override
+    public String toString() {
+        return "Post{" +
+                "description='" + description + '\'' +
+                ", image_url='" + image_url + '\'' +
+                ", post_id='" + post_id + '\'' +
+                ", publisher='" + publisher + '\'' +
+                ", time_created='" + time_created + '\'' +
+                '}';
+    }
+
     public String getDescription() {
         return description;
     }
