@@ -35,10 +35,8 @@ public class FavoriteFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentFavoriteBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-
         init();
         readNotifications();
-
         return view;
     }
 

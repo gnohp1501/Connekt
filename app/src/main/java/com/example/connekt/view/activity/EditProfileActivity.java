@@ -107,6 +107,7 @@ public class EditProfileActivity extends AppCompatActivity {
         HashMap<String, Object> map = new HashMap<>();
         map.put(Constant.FULL_NAME, binding.etFullName.getText().toString());
         map.put(Constant.USER_NAME, binding.etUserName.getText().toString());
+        map.put(Constant.BOD, binding.etDob.getText().toString());
         map.put(Constant.BIO, binding.etBio.getText().toString());
         FirebaseDatabase.getInstance().getReference().child(Constant.USERS)
                 .child(fUser.getUid()).updateChildren(map);
@@ -156,7 +157,8 @@ public class EditProfileActivity extends AppCompatActivity {
                 }
             });
         } else {
-            Toast.makeText(this, "No image changed", Toast.LENGTH_SHORT).show();
+            finish();
+            pd.dismiss();
         }
     }
 
@@ -170,6 +172,8 @@ public class EditProfileActivity extends AppCompatActivity {
                 binding.etUserName.setText(user.getUser_name());
                 binding.etFullName.setText(user.getFull_name());
                 binding.etBio.setText(user.getBio());
+                binding.etDob.setText(user.getDob());
+                binding.etPhone.setText(user.getPhone_number());
             }
 
             @Override

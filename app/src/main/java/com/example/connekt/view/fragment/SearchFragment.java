@@ -43,8 +43,6 @@ public class SearchFragment extends Fragment {
     private FragmentSearchBinding binding;
     FirebaseUser firebaseUser;
 
-    private final Boolean showTab = true;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

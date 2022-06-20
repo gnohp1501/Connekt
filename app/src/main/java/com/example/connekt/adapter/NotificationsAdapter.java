@@ -1,6 +1,7 @@
 package com.example.connekt.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.connekt.R;
@@ -15,6 +17,8 @@ import com.example.connekt.constant.Constant;
 import com.example.connekt.model.Notification;
 import com.example.connekt.model.Post;
 import com.example.connekt.model.User;
+import com.example.connekt.view.activity.CommentActivity;
+import com.example.connekt.view.fragment.PersonFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -53,22 +57,22 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
             holder.iv_image.setVisibility(View.GONE);
         }
 
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (notification.isPost()) {
-//                    mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE)
-//                            .edit().putString(Constant.POST_ID, notification.getPost_id()).apply();
-//                    ((FragmentActivity)mContext).getSupportFragmentManager()
-//                            .beginTransaction().replace(R.id.fragment_container, new PostDetailFragment()).commit();
-//                } else {
-//                    mContext.getSharedPreferences(Constant.PROFILE, Context.MODE_PRIVATE)
-//                            .edit().putString(Constant.PROFILE_ID, notification.getUserid()).apply();
-//                    ((FragmentActivity)mContext).getSupportFragmentManager()
-//                            .beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
-//                }
-//            }
-//        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (notification.isPost()) {
+                    Intent intent = new Intent(mContext, CommentActivity.class);
+                    intent.putExtra(Constant.POST_ID, notification.getPost_id());
+                    mContext.startActivity(intent);
+                } else {
+                    mContext.getSharedPreferences(Constant.PROFILE, Context.MODE_PRIVATE)
+                            .edit().putString(Constant.PROFILE_ID, notification.getUser_id()).apply();
+
+                    ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container, new PersonFragment()).commit();
+                }
+            }
+        });
     }
 
     @Override

@@ -15,6 +15,7 @@ import com.example.connekt.adapter.CommentAdapter;
 import com.example.connekt.constant.Constant;
 import com.example.connekt.databinding.ActivityCommentBinding;
 import com.example.connekt.model.Comment;
+import com.example.connekt.model.Post;
 import com.example.connekt.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -37,6 +38,8 @@ public class CommentActivity extends AppCompatActivity {
     private CommentAdapter commentAdapter;
     private List<Comment> commentList;
     private String postId;
+    private String authorId;
+    private String image_Url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +47,8 @@ public class CommentActivity extends AppCompatActivity {
         binding = ActivityCommentBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
         init();
+        getPostDetail();
         getUserImage();
         inputComment();
         getComment();
@@ -62,6 +65,37 @@ public class CommentActivity extends AppCompatActivity {
         binding.recyclerView.setAdapter(commentAdapter);
         fUser = FirebaseAuth.getInstance().getCurrentUser();
     }
+
+    private void getPostDetail() {
+        FirebaseDatabase.getInstance().getReference().child(Constant.POSTS).child(postId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Post post = dataSnapshot.getValue(Post.class);
+                authorId = post.getPublisher();
+                image_Url = post.getImage_url();
+                Picasso.get().load(image_Url).into(binding.ivImage);
+                FirebaseDatabase.getInstance().getReference().child(Constant.USERS).child(authorId).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        User user = dataSnapshot.getValue(User.class);
+                        binding.tvAuthor.setText("Post of " + user.getUser_name());
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
 
     private void getComment() {
         FirebaseDatabase.getInstance().getReference().child(Constant.COMMENTS).child(postId).addValueEventListener(new ValueEventListener() {
@@ -119,7 +153,9 @@ public class CommentActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-
+                    if (!postId.equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                        addNotification(postId, authorId);
+                    }
                 } else {
                     Toast.makeText(CommentActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -145,5 +181,15 @@ public class CommentActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void addNotification(String postId, String publisherId) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put(Constant.USER_ID, fUser.getUid());
+        map.put(Constant.TITLE, getString(R.string.commentYourPostLabel));
+        map.put(Constant.POST_ID, postId);
+        map.put(Constant.IS_POST, true);
+        map.put(Constant.TIME_CREATED, System.currentTimeMillis() + "");
+        FirebaseDatabase.getInstance().getReference().child(Constant.NOTIFICATIONS).child(publisherId).push().setValue(map);
     }
 }

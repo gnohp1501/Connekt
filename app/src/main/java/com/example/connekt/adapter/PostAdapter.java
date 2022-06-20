@@ -164,7 +164,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 if (holder.iv_heart.getTag().equals(Constant.LIKE)) {
                     FirebaseDatabase.getInstance().getReference().child(Constant.LIKES)
                             .child(post.getPost_id()).child(firebaseUser.getUid()).setValue(true);
-                    addNotification(post.getPost_id(), post.getPublisher());
+                    if (!post.getPublisher().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                        addNotification(post.getPost_id(), post.getPublisher());
+                    }
                 } else {
                     FirebaseDatabase.getInstance().getReference().child(Constant.LIKES)
                             .child(post.getPost_id()).child(firebaseUser.getUid()).removeValue();
@@ -178,6 +180,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 Intent intent = new Intent(mContext, CommentActivity.class);
                 intent.putExtra(Constant.POST_ID, post.getPost_id());
                 intent.putExtra(Constant.AUTHOR_ID, post.getPublisher());
+                intent.putExtra(Constant.IMAGE_URL, post.getImage_url());
                 mContext.startActivity(intent);
             }
         });
@@ -337,7 +340,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     private void addNotification(String postId, String publisherId) {
         HashMap<String, Object> map = new HashMap<>();
-
         map.put(Constant.USER_ID, firebaseUser.getUid());
         map.put(Constant.TITLE, mContext.getString(R.string.likedYourPostLabel));
         map.put(Constant.POST_ID, postId);
