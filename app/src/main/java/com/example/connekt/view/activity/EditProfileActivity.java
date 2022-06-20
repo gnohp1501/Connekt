@@ -1,11 +1,14 @@
 package com.example.connekt.view.activity;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.DatePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.connekt.constant.Constant;
 import com.example.connekt.databinding.ActivityEditProfileBinding;
 import com.example.connekt.model.User;
+import com.example.connekt.utils.DateUtils;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -29,7 +33,10 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class EditProfileActivity extends AppCompatActivity {
     private final int REQUEST_CODE = 1;
@@ -40,6 +47,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private ActivityEditProfileBinding binding;
     private Uri filePathUri;
     ProgressDialog pd;
+    final Calendar myCalendar = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +59,27 @@ public class EditProfileActivity extends AppCompatActivity {
         changePhoto();
         save();
         close();
+        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int day) {
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, month);
+                myCalendar.set(Calendar.DAY_OF_MONTH, day);
+                updateLabel();
+            }
+        };
+        binding.etDob.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new DatePickerDialog(EditProfileActivity.this, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+    }
+
+    private void updateLabel() {
+        String myFormat = "dd/MM/YYYY";
+        SimpleDateFormat dateFormat = new SimpleDateFormat(myFormat, Locale.US);
+        binding.etDob.setText(dateFormat.format(myCalendar.getTime()));
     }
 
     private void init() {
@@ -107,7 +136,7 @@ public class EditProfileActivity extends AppCompatActivity {
         HashMap<String, Object> map = new HashMap<>();
         map.put(Constant.FULL_NAME, binding.etFullName.getText().toString());
         map.put(Constant.USER_NAME, binding.etUserName.getText().toString());
-        map.put(Constant.BOD, binding.etDob.getText().toString());
+        map.put(Constant.BOD, myCalendar.getTimeInMillis() + "");
         map.put(Constant.BIO, binding.etBio.getText().toString());
         FirebaseDatabase.getInstance().getReference().child(Constant.USERS)
                 .child(fUser.getUid()).updateChildren(map);
@@ -172,8 +201,9 @@ public class EditProfileActivity extends AppCompatActivity {
                 binding.etUserName.setText(user.getUser_name());
                 binding.etFullName.setText(user.getFull_name());
                 binding.etBio.setText(user.getBio());
-                binding.etDob.setText(user.getDob());
+                binding.etDob.setText(DateUtils.longToDate(Long.parseLong(user.getBOD())));
                 binding.etPhone.setText(user.getPhone_number());
+                Log.d("123", user.toString());
             }
 
             @Override

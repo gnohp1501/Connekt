@@ -36,6 +36,7 @@ public class ChatFragment extends Fragment {
     private List<ChatList> listChat;
 
     private List<User> mUser;
+    private List<String> listUser;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,31 +69,28 @@ public class ChatFragment extends Fragment {
             }
         });
 
-//         reference = FirebaseDatabase.getInstance().getReference("chats");
-//         reference.addValueEventListener(new ValueEventListener() {
-//             @Override
-//             public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                 usersList.clear();
-//                 for(DataSnapshot snap : snapshot.getChildren())
-//                 {
-//                     Chat chat= snap.getValue(Chat.class);
-//                     if(chat.getSender().equals(firebaseUser.getUid()))
-//                     {
-//                         usersList.add(chat.getReceiver());
-//                     }
-//                     if (chat.getReceiver().equals(firebaseUser.getUid()))
-//                     {
-//                         usersList.add(chat.getSender());
-//                     }
-//                 }
-//                 //readChat();
-//             }
+//        reference = FirebaseDatabase.getInstance().getReference("chats");
+//        reference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                listUser.clear();
+//                for (DataSnapshot snap : snapshot.getChildren()) {
+//                    Chat chat = snap.getValue(Chat.class);
+//                    if (chat.getSender().equals(firebaseUser.getUid())) {
+//                        listUser.add(chat.getReceiver());
+//                    }
+//                    if (chat.getReceiver().equals(firebaseUser.getUid())) {
+//                        listUser.add(chat.getSender());
+//                    }
+//                }
+//                //readChat();
+//            }
 //
-//             @Override
-//             public void onCancelled(@NonNull DatabaseError error) {
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
 //
-//             }
-//         });
+//            }
+//        });
         return view;
     }
 

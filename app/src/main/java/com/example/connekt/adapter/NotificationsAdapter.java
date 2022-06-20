@@ -1,5 +1,7 @@
 package com.example.connekt.adapter;
 
+import static com.example.connekt.utils.DateUtils.getTimeAgo;
+
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -50,7 +52,8 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
 
         getUser(holder.iv_ava, holder.tv_user_name, notification.getUser_id());
         holder.tv_title.setText(notification.getTitle());
-        if (notification.isPost()) {
+        holder.tv_time_created.setText(getTimeAgo(Long.parseLong(notification.getTime_created())));
+        if (!notification.getPost_id().equals("")) {
             holder.iv_image.setVisibility(View.VISIBLE);
             getPostImage(holder.iv_image, notification.getPost_id());
         } else {
@@ -60,7 +63,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (notification.isPost()) {
+                if (!notification.getPost_id().equals("")) {
                     Intent intent = new Intent(mContext, CommentActivity.class);
                     intent.putExtra(Constant.POST_ID, notification.getPost_id());
                     mContext.startActivity(intent);
@@ -85,7 +88,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Post post = dataSnapshot.getValue(Post.class);
-                Picasso.get().load(post.getImage_url()).placeholder(R.mipmap.ic_launcher).into(imageView);
+                Picasso.get().load(post.getImage_url()).placeholder(R.drawable.background_post).into(imageView);
             }
 
             @Override
@@ -120,6 +123,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         public ImageView iv_image;
         public TextView tv_user_name;
         public TextView tv_title;
+        public TextView tv_time_created;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -127,6 +131,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
             iv_image = itemView.findViewById(R.id.iv_image);
             tv_user_name = itemView.findViewById(R.id.tv_user_name);
             tv_title = itemView.findViewById(R.id.tv_title);
+            tv_time_created = itemView.findViewById(R.id.tv_time_created);
         }
     }
 }
