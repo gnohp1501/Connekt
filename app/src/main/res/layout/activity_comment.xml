@@ -30,6 +30,7 @@
                     android:src="@drawable/ic_exit1" />
 
                 <TextView
+                    android:id="@+id/tv_author"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -43,11 +44,27 @@
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
+    <RelativeLayout
+        android:id="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bar"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="40dp">
+
+        <ImageView
+            android:id="@+id/iv_image"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/background_image"
+            android:scaleType="fitXY" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/bar"
+        android:layout_below="@id/top"
         android:layout_marginTop="40dp"
         android:background="@drawable/background_chat">
 

@@ -12,6 +12,7 @@
     <string name="yesLabel">YES</string>
     <string name="deleteCommentSuccessLabel">comment deleted</string>
     <string name="likedYourPostLabel">Liked your post</string>
+    <string name="commentYourPostLabel">Comment your post</string>
     <string name="seenLabel">seen</string>
     <string name="deliveredLabel">Delivered</string>
     <string name="sign_in_with_google">Sign in with GOOGLE</string>
