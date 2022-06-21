@@ -62,6 +62,8 @@ public class Constant {
     public static final String REMOTE_MSG_REGISTRATION_IDS = "registration_ids";
     public static final String NO_CREATE = "no_create";
     public static final String CREATED = "created";
+    public static final String ACTIVE = "active";
+    public static final String DELETED = "deleted";
 
     public static HashMap<String, String> remoteMsgHeaders = null;
 
@@ -80,5 +82,6 @@ public class Constant {
         }
         return remoteMsgHeaders;
     }
+
     public static final String EDIT = "edit";
 }

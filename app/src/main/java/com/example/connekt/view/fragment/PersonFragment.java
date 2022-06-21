@@ -201,7 +201,7 @@ public class PersonFragment extends Fragment {
                                 for (DataSnapshot snapshot1 : dataSnapshot1.getChildren()) {
                                     Post post = snapshot1.getValue(Post.class);
                                     for (String id : savedIds) {
-                                        if (post.getPost_id().equals(id)) {
+                                        if (post.getPost_id().equals(id)&& post.getStatus().equals(Constant.ACTIVE)) {
                                             mySavedPosts.add(post);
                                         }
                                     }
@@ -231,7 +231,7 @@ public class PersonFragment extends Fragment {
                         myPhotoList.clear();
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Post post = snapshot.getValue(Post.class);
-                            if (post.getPublisher().equals(profileId)) {
+                            if (post.getPublisher().equals(profileId) && post.getStatus().equals(Constant.ACTIVE)) {
                                 myPhotoList.add(post);
 
                             }

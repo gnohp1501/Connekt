@@ -35,7 +35,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -105,22 +104,26 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                         mLeft.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                                Query query = ref.child(Constant.POSTS).child(post.getPost_id());
+//                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+//                                Query query = ref.child(Constant.POSTS).child(post.getPost_id());
 
-                                query.addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        for (DataSnapshot appleSnapshot : dataSnapshot.getChildren()) {
-                                            appleSnapshot.getRef().removeValue();
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
-                                        Log.e("1212", "onCancelled", databaseError.toException());
-                                    }
-                                });
+                                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(Constant.POSTS).child(post.getPost_id());
+                                HashMap<String, Object> hashMap = new HashMap<>();
+                                hashMap.put(Constant.STATUS, Constant.DELETED);
+                                databaseReference.updateChildren(hashMap);
+//                                query.addListenerForSingleValueEvent(new ValueEventListener() {
+//                                    @Override
+//                                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                                        for (DataSnapshot appleSnapshot : dataSnapshot.getChildren()) {
+//                                            appleSnapshot.getRef().child(Constant.STATUS).setValue("deleted");
+//                                        }
+//                                    }
+//
+//                                    @Override
+//                                    public void onCancelled(DatabaseError databaseError) {
+//                                        Log.e("1212", "onCancelled", databaseError.toException());
+//                                    }
+//                                });
                                 dialog.hide();
                             }
                         });
