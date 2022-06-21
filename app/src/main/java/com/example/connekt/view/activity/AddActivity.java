@@ -56,6 +56,12 @@ public class AddActivity extends AppCompatActivity {
         selectImage();
         publishPost();
         userInfo();
+        binding.ivClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     private void init() {
@@ -174,6 +180,7 @@ public class AddActivity extends AppCompatActivity {
                     map.put(Constant.DESCRIPTION, binding.etStatus.getText().toString());
                     map.put(Constant.PUBLISHER, FirebaseAuth.getInstance().getCurrentUser().getUid());
                     map.put(Constant.TIME_CREATED, System.currentTimeMillis() + "");
+                    map.put(Constant.STATUS, "active");
                     ref.child(postId).setValue(map);
                     pd.dismiss();
                     startActivity(new Intent(AddActivity.this, MainActivity.class));

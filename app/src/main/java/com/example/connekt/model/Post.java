@@ -14,27 +14,19 @@ public class Post {
     private String publisher;
     @SerializedName(Constant.TIME_CREATED)
     private String time_created;
+    @SerializedName(Constant.STATUS)
+    private String status;
 
     public Post() {
     }
 
-    public Post(String description, String image_url, String post_id, String publisher, String time_created) {
+    public Post(String description, String image_url, String post_id, String publisher, String time_created, String status) {
         this.description = description;
         this.image_url = image_url;
         this.post_id = post_id;
         this.publisher = publisher;
         this.time_created = time_created;
-    }
-
-    @Override
-    public String toString() {
-        return "Post{" +
-                "description='" + description + '\'' +
-                ", image_url='" + image_url + '\'' +
-                ", post_id='" + post_id + '\'' +
-                ", publisher='" + publisher + '\'' +
-                ", time_created='" + time_created + '\'' +
-                '}';
+        this.status = status;
     }
 
     public String getDescription() {
@@ -75,5 +67,25 @@ public class Post {
 
     public void setTime_created(String time_created) {
         this.time_created = time_created;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "description='" + description + '\'' +
+                ", image_url='" + image_url + '\'' +
+                ", post_id='" + post_id + '\'' +
+                ", publisher='" + publisher + '\'' +
+                ", time_created='" + time_created + '\'' +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

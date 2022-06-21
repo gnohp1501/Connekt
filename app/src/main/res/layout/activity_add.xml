@@ -25,6 +25,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
+                <ImageView
+                    android:id="@+id/iv_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="30dp"
+                    android:src="@drawable/ic_exit2" />
                 <TextView
                     android:id="@+id/tv_title"
                     android:layout_width="wrap_content"
