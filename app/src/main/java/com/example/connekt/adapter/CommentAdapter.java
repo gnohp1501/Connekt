@@ -1,5 +1,6 @@
 package com.example.connekt.adapter;
 
+import static com.example.connekt.utils.DateUtils.formatNumber;
 import static com.example.connekt.utils.DateUtils.getTimeAgo;
 
 import android.app.AlertDialog;
@@ -9,6 +10,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -132,6 +134,55 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                 return true;
             }
         });
+
+        holder.flag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (holder.flag.getTag().equals(Constant.FLAG)) {
+                    FirebaseDatabase.getInstance().getReference().child(Constant.FLAG)
+                            .child(comment.getId()).child(fUser.getUid()).setValue(true);
+                } else {
+                    FirebaseDatabase.getInstance().getReference().child(Constant.FLAG)
+                            .child(comment.getId()).child(fUser.getUid()).removeValue();
+                }
+            }
+        });
+        isFlag(comment.getId(), holder.flag);
+        getFlag(comment.getId(), holder.tv_flag);
+    }
+
+    private void isFlag(String postId, final ImageView imageView) {
+        FirebaseDatabase.getInstance().getReference().child(Constant.FLAG).child(postId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child(fUser.getUid()).exists()) {
+                    imageView.setImageResource(R.drawable.ic_baseline_flag_24_red);
+                    imageView.setTag(Constant.FLAGED);
+                } else {
+                    imageView.setImageResource(R.drawable.ic_baseline_flag_24);
+                    imageView.setTag(Constant.FLAG);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void getFlag(String postId, final TextView text) {
+        FirebaseDatabase.getInstance().getReference().child(Constant.FLAG).child(postId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                text.setText(formatNumber(dataSnapshot.getChildrenCount()));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -144,6 +195,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         public TextView username;
         public TextView comment;
         public TextView time_created;
+        public TextView tv_flag;
+        public ImageView flag;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -153,7 +206,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             username = itemView.findViewById(R.id.username);
             comment = itemView.findViewById(R.id.comment);
             time_created = itemView.findViewById(R.id.tv_time_created);
-
+            tv_flag = itemView.findViewById(R.id.tv_flag);
+            flag = itemView.findViewById(R.id.flag);
         }
     }
 }

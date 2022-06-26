@@ -6,7 +6,6 @@
     android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp"
     android:layout_marginBottom="20dp"
-    android:visibility="gone"
     android:background="@drawable/background_post">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -45,6 +44,17 @@
             android:text="Full name" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tv_mutual_friend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/but_follow"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginRight="30dp"
+        android:text="1 mutual friend"
+        android:textColor="@color/black" />
+
     <Button
         android:id="@+id/but_follow"
         android:layout_width="wrap_content"
@@ -56,4 +66,5 @@
         android:padding="5dp"
         android:textColor="@color/blue_1"
         android:visibility="gone" />
+
 </RelativeLayout>

@@ -25,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -37,6 +38,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     private final boolean isFragment;
 
     private FirebaseUser firebaseUser;
+    private List<String> id1;
+    private List<String> id2;
+    private int mutual;
 
 
     public UserAdapter(Context mContext, List<User> mUsers, boolean isFragment) {
@@ -101,6 +105,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             }
         });
 
+        checkFollowingUsers(user.getId(), holder.tv_mutual_friend);
+
     }
 
     private void isFollowed(final String id, final Button btnFollow) {
@@ -140,11 +146,64 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         FirebaseDatabase.getInstance().getReference().child(Constant.NOTIFICATIONS).child(userId).push().setValue(map);
     }
 
+    private void checkFollowingUsers(String user, TextView view) {
+        id1 = new ArrayList<>();
+        id2 = new ArrayList<>();
+        mutual = 0;
+        FirebaseDatabase.getInstance().getReference().child(Constant.FOLLOW).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(Constant.FOLLOWING).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                id1.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    id1.add(snapshot.getKey());
+                }
+                id1.add(FirebaseAuth.getInstance().getCurrentUser().getUid());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        FirebaseDatabase.getInstance().getReference().child(Constant.FOLLOW).child(user).child(Constant.FOLLOWING).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                id2.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    id2.add(snapshot.getKey());
+                }
+                id2.add(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                mutual = 0;
+                for (String id1 : id1) {
+                    for (String id2: id2){
+                        if (id1.equals(id2)) {
+                            mutual++;
+                        }
+                    }
+                }
+                view.setText(mutual + " mutual friend");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+//        for (int i = 1; i <= id1.size(); i++) {
+//            for (int j = 1; j <= id2.size(); j++) {
+//                if (id1.get(i) == id2.get(j)) {
+//                    mutual++;
+//                }
+//            }
+//        }
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public CircleImageView iv_ava;
         public TextView tv_user_name;
         public TextView tv_full_name;
+        public TextView tv_mutual_friend;
         public Button btn_Follow;
         public RelativeLayout layout;
 
@@ -156,6 +215,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             tv_full_name = itemView.findViewById(R.id.tv_full_name);
             btn_Follow = itemView.findViewById(R.id.but_follow);
             layout = itemView.findViewById(R.id.layout);
+            tv_mutual_friend = itemView.findViewById(R.id.tv_mutual_friend);
         }
     }
 
