@@ -66,23 +66,28 @@ public class SignInActivity extends AppCompatActivity {
         binding.butSignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                String email = binding.etEmail.getText().toString();
-//                String password = binding.etPassword.getText().toString();
-//
-//                if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
-//                    Toast.makeText(SignInActivity.this, "Empty Credentials!", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    loginUser(email, password);
-//                }
                 signIn();
             }
         });
-//        binding.tvSignup.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(SignInActivity.this,SignUpActivity.class));
-//            }
-//        });
+        binding.butSigninEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String email = binding.etEmail.getText().toString();
+                String password = binding.etPassword.getText().toString();
+
+                if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
+                    Toast.makeText(SignInActivity.this, "Empty Credentials!", Toast.LENGTH_SHORT).show();
+                } else {
+                    loginUser(email+"@gmail.com", password);
+                }
+            }
+        });
+        binding.tvSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(SignInActivity.this, SignUpActivity.class));
+            }
+        });
     }
 
     /**
@@ -188,7 +193,6 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void loginUser(String email, String password) {
-
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {

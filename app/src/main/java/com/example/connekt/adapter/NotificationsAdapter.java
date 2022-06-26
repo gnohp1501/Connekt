@@ -53,7 +53,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         getUser(holder.iv_ava, holder.tv_user_name, notification.getUser_id());
         holder.tv_title.setText(notification.getTitle());
         holder.tv_time_created.setText(getTimeAgo(Long.parseLong(notification.getTime_created())));
-        if (!notification.getPost_id().equals("")) {
+        if (!notification.getPost_id().isEmpty()) {
             holder.iv_image.setVisibility(View.VISIBLE);
             getPostImage(holder.iv_image, notification.getPost_id());
         } else {
@@ -63,7 +63,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!notification.getPost_id().equals("")) {
+                if (!notification.getPost_id().isEmpty()) {
                     Intent intent = new Intent(mContext, CommentActivity.class);
                     intent.putExtra(Constant.POST_ID, notification.getPost_id());
                     mContext.startActivity(intent);

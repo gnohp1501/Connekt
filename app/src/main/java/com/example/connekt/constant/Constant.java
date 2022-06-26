@@ -28,6 +28,7 @@ public class Constant {
     public static final String LIKE = "like";
     public static final String LIKES = "likes";
     public static final String POSTS = "posts";
+    public static final String FLAG = "flag";
     public static final String FOLLOW = "follow";
     public static final String FOLLOWING = "following";
     public static final String FOLLOWERS = "followers";
@@ -40,6 +41,7 @@ public class Constant {
     public static final String PROFILE_ID = "profile_id";
     public static final String SAVED = "saved";
     public static final String LIKED = "liked";
+    public static final String FLAGED = "flaged";
     public static final String NOTIFICATIONS = "notifications";
     public static final String FOLLOWINGS = "followings";
     public static final String SENDER = "sender";

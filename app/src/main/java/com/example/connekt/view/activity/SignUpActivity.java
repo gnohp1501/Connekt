@@ -80,7 +80,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void registerUser() {
-        mAuth.createUserWithEmailAndPassword(EMAIL, PASSWORD).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        mAuth.createUserWithEmailAndPassword(EMAIL + "@gmail.com", PASSWORD).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 ID = mAuth.getCurrentUser().getUid();
@@ -99,10 +99,11 @@ public class SignUpActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(SignUpActivity.this, R.string.uploadProfileBetterLabel, Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
+                            Intent i = new Intent(SignUpActivity.this, EditProfileActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putBoolean(Constant.CREATED, false);
+                            i.putExtras(bundle);
+                            startActivity(i);
                             finish();
                         }
                     }
